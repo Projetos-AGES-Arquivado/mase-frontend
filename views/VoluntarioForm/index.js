@@ -12,6 +12,9 @@ class VoluntarioForm extends Component {
         this.state = {
             termoUm: false,
             termoDois: false,
+            profissao: '',
+            numeroConselho: '',
+            vinculo: ''
         }
     }
 
@@ -31,6 +34,24 @@ class VoluntarioForm extends Component {
         }
     }
 
+    handleProfissao = (profissao) => {
+        this.setState({ profissao });
+    }
+
+    handleVinculo= (vinculo) => {
+        this.setState({ vinculo });
+    }
+
+    handleNumeroConselho = (numeroConselho) => {
+        this.setState({ numeroConselho });
+    }
+
+    handleSubmit = () => {
+        console.log(this.state.profissao)
+        console.log(this.state.numeroConselho)
+        console.log(this.state.vinculo)
+    } 
+
     render() {
         return (
             <Container>
@@ -38,13 +59,13 @@ class VoluntarioForm extends Component {
                 <Content>
                     <Form>
                         <Item>
-                            <Input style={styles.input} placeholder="Profissão" />
+                            <Input style={styles.input} placeholder="Profissão" onChangeText={this.handleProfissao}/>
                         </Item>
                         <Item >
-                            <Input type="number" style={styles.input} placeholder="Numero Conselho" />
+                            <Input type="number" style={styles.input} placeholder="Numero Conselho" onChangeText={this.handleNumeroConselho}/>
                         </Item>
                         <Item>
-                            <Input style={styles.input} placeholder="Vinculo Institucional" />
+                            <Input style={styles.input} placeholder="Vinculo Institucional" onChangeText={this.handleVinculo}/>
                         </Item>
                     </Form>
                     <Content style={styles.checkBoxContent}>
@@ -62,7 +83,7 @@ class VoluntarioForm extends Component {
                         </ListItem>
                     </Content>
                     <Content style={styles.buttonContent}>
-                        <Button full rounded danger style={styles.button}><Text style={styles.text}>Confirmar</Text></Button>
+                        <Button full rounded danger style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
                         <Button full rounded warning style={styles.button}><Text style={styles.text}>Cancelar</Text></Button>
                     </Content>
                 </Content>
