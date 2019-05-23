@@ -3,6 +3,7 @@ import { NativeRouter, Route, Link } from "react-router-native";
 import Login from "../Login";
 import Signup from "../Signup";
 import VoluntarioForm from "../VoluntarioForm";
+import DefesaCivilForm from "../DefesaCivilForm";
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
           <Route exact path="/" component={Login} />
           <Route path="/cadastro" component={Signup} />
           <Route path="/cadastro-voluntario" component={VoluntarioForm} />
+          <Route path="/cadastro-defesaCivil" component={DefesaCivilForm} />
       </NativeRouter>
     );
 }
