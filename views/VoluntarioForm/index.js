@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { Container, Content, Form, Item, Input, Button, CheckBox, Body, ListItem} from 'native-base';
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 import { StyleSheet, Text } from 'react-native';
 import Header from '../Generic/Header'
 
@@ -46,6 +46,10 @@ class VoluntarioForm extends Component {
         this.setState({ numeroConselho });
     }
 
+    handleVoltar = () => {
+        this.props.history.push('/cadastro');
+    }
+
     handleSubmit = () => {
         console.log(this.state.profissao)
         console.log(this.state.numeroConselho)
@@ -84,7 +88,7 @@ class VoluntarioForm extends Component {
                     </Content>
                     <Content style={styles.buttonContent}>
                         <Button full rounded danger style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
-                        <Button full rounded warning style={styles.button}><Text style={styles.text}>Cancelar</Text></Button>
+                        <Button full rounded warning style={styles.button} onPress={this.handleVoltar}><Text style={styles.text}>Voltar</Text></Button>
                     </Content>
                 </Content>
             </Container>
@@ -122,4 +126,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default VoluntarioForm;
+export default withRouter(VoluntarioForm);
