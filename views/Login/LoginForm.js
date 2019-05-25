@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(225,225,225,0.2)',
         marginBottom: 10,
         padding: 10,
-        color: '#fff'
+        color: '#fff',
     },
     buttonContainer2: {
         backgroundColor: '#46a8e4',
