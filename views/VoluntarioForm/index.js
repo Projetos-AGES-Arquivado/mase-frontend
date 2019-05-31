@@ -59,7 +59,7 @@ class VoluntarioForm extends Component {
     render() {
         return (
             <Container>
-                <Header texto="Cadastro de Voluntário" />
+                <Header texto="Cadastrar Voluntário" />
                 <Content>
                     <Form>
                         <Item>
@@ -87,8 +87,8 @@ class VoluntarioForm extends Component {
                         </ListItem>
                     </Content>
                     <Content style={styles.buttonContent}>
-                        <Button full rounded danger style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
-                        <Button full rounded warning style={styles.button} onPress={this.handleVoltar}><Text style={styles.text}>Voltar</Text></Button>
+                        <Button full rounded style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
+                        <Button full rounded style={styles.button} onPress={this.handleVoltar}><Text style={styles.text}>Voltar</Text></Button>
                     </Content>
                 </Content>
             </Container>
@@ -109,11 +109,15 @@ const styles = StyleSheet.create({
     },
     button:{
         marginTop: 10,
+        borderColor: 'black',
+        borderWidth: 2,
+        backgroundColor: 'white',
     },
     text: {
-        color: 'white',
+        color: 'black',
         fontSize: 18,
-        padding: 15
+        padding: 15,
+        fontWeight: 'bold',
     },
     buttonContent: {
         marginTop: 40,
