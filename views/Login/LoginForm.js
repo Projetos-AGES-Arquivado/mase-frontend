@@ -10,7 +10,8 @@ class LoginForm extends Component {
         super(props)
         this.state = {
             password: '',
-            email: ''
+            email: '',
+            emailError: '',
         }
     }
 
@@ -20,9 +21,10 @@ class LoginForm extends Component {
     handlePasswordChange = (password) => {
         this.setState({ password: password })
     }
-    handleSubmit = () => {
-        console.log('10.0.2.2')
-        fetch('http://10.0.2.2:8081/login', {
+    handleSubmit = async() => {
+        let mensagem = '';
+        //console.log('10.0.2.2')
+        await fetch('http://10.0.2.2:8081/login', {
                 method: 'POST',
                 headers: {
                     Accept: 'application/json',
@@ -33,11 +35,15 @@ class LoginForm extends Component {
             password: this.state.password,
           })
         }).then(function (response) {
+            if (!response.ok) {
+                mensagem = "Email ou senha estão inválidos, favor digitar corretamente!";
+            }
             console.log(response);
           })
-          .catch(function (error) {
+          .catch(function (error){
             console.log(error);
           });
+        this.setState({ emailError: mensagem});
     }
 
     render() {
@@ -55,13 +61,15 @@ class LoginForm extends Component {
                     placeholder='Email'
                     placeholderTextColor='#2f4f4f'
                     textContentType="emailAddress" />
-
                 <TextInput style={styles.input}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
                     onChangeText={this.handlePasswordChange}
                     placeholder='Senha'
                     placeholderTextColor='#2f4f4f'
                     secureTextEntry />
+                {this.state.emailError !== '' && (
+                    <Text style={styles.textError}>{this.state.emailError}</Text>
+                )}
                 {/*   <Button onPress={onButtonPress} title = 'Login' style={styles.loginButton} /> */}
                 <View style={{marginBottom:50}}>                
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
@@ -85,7 +93,7 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 1,
-        marginBottom: 50,
+        marginBottom: 40,
         padding: 10,
         color: '#2f4f4f',
         textAlign: 'center',
@@ -107,8 +115,15 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#2980b6',
         color: '#fff'
-    }
+    },
+    textError: {
+        color: '#ff0000',
+        textAlign: 'center',
+        marginBottom: 30,
+        fontSize: 15,
+        fontWeight: 'bold',
 
+    }
 });
 
 //make this component available to the app
