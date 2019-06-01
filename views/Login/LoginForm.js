@@ -38,21 +38,21 @@ class LoginForm extends Component {
                     keyboardType='email-address'
                     returnKeyType="next"
                     placeholder='Email'
-                    placeholderTextColor='rgba(225,225,225,0.7)' />
+                    placeholderTextColor='#2f4f4f' />
 
                 <TextInput style={styles.input}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
                     onChangeText={this.handlePasswordChange}
                     placeholder='Senha'
-                    placeholderTextColor='rgba(225,225,225,0.7)'
+                    placeholderTextColor='#2f4f4f'
                     secureTextEntry />
                 {/*   <Button onPress={onButtonPress} title = 'Login' style={styles.loginButton} /> */}
                 <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-                    <Text style={styles.buttonText}>LOGIN</Text>
+                    <Text style={styles.buttonText}>ENTRAR</Text>
                 </TouchableOpacity>
                 
                 <Link to="/cadastro" underlayColor="#f0f4f7" style={styles.buttonContainer2}>
-                    <Text style={styles.buttonText}>Cadastrar</Text>
+                    <Text style={styles.buttonText}>CADASTRAR</Text>
                     {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
                 </Link>
             </View>
@@ -66,22 +66,34 @@ const styles = StyleSheet.create({
         padding: 20
     },
     input: {
-        height: 40,
+        height: 50,
         backgroundColor: 'rgba(225,225,225,0.2)',
-        marginBottom: 10,
+        marginBottom: 70,
         padding: 10,
         color: '#fff',
+        textAlign: 'center',
     },
     buttonContainer2: {
-        backgroundColor: '#46a8e4',
-        paddingVertical: 5,
+        backgroundColor: '#fff',
+        paddingVertical: 15,
+        marginBottom: 50,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 10,
+        
     },
     buttonContainer: {
-        backgroundColor: '#2980b6',
-        paddingVertical: 15
+        backgroundColor: '#fff',
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 10,
     },
     buttonText: {
-        color: '#fff',
+        color: '#000000',
         textAlign: 'center',
         fontWeight: '700'
     },
