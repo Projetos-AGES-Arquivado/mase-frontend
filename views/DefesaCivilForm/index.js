@@ -1,7 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
 import Header from '../Generic/Header'
 
@@ -61,7 +61,7 @@ class DefesaCivilForm extends Component {
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
                         <Text style={styles.buttonText}>ENTRAR</Text>
                     </TouchableOpacity>                   
-                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleCancel}>
                         <Text style={styles.buttonText}>CANCELAR</Text>
                     </TouchableOpacity>   
                 </View>
@@ -121,5 +121,4 @@ const styles = StyleSheet.create({
 
 });
 
-//make this component available to the app
-export default DefesaCivilForm;
+export default withRouter(DefesaCivilForm);
