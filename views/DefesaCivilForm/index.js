@@ -59,7 +59,7 @@ class DefesaCivilForm extends Component {
                 </View>
                 <View style={{marginBottom:50}}>                
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
-                        <Text style={styles.buttonText}>ENTRAR</Text>
+                        <Text style={styles.buttonText}>CADASTRAR</Text>
                     </TouchableOpacity>                   
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.handleCancel}>
                         <Text style={styles.buttonText}>CANCELAR</Text>
