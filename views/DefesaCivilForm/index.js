@@ -1,8 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { Container, Content, Form, Item, Input, Button, CheckBox, Body, ListItem} from 'native-base';
-import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import { StyleSheet, Text } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
+import { NativeRouter, Route, Link } from "react-router-native";
+import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
 import Header from '../Generic/Header'
 
 // create a component
@@ -15,7 +15,6 @@ class DefesaCivilForm extends Component {
             vinculo: ''
         }
     }
-
     checkTermoAceito = () => {
         if(this.state.termoAceito === false){
             this.setState({ termoAceito: true })  
@@ -23,19 +22,15 @@ class DefesaCivilForm extends Component {
             this.setState({ termoAceito: false })
         }
     }
-
     handleCargo = (cargo) => {
         this.setState({ cargo });
     }
-
     handleVinculo= (vinculo) => {
         this.setState({ vinculo });
     }
-
     handleCancel = () => {
         this.props.history.push('/cadastro');
     }
-
     handleSubmit = () => {
         console.log(this.state.cargo)
         console.log(this.state.vinculo)
@@ -43,31 +38,34 @@ class DefesaCivilForm extends Component {
 
     render() {
         return (
-            <Container>
+            <View style={styles.container}>
                 <Header texto="Cadastro Defesa Civil" />
-                <Content>
-                    <Form>
-                        <Item>
-                            <Input style={styles.input} placeholder="Cargo" onChangeText={this.handleCargo}/>
-                        </Item>
-                        <Item>
-                            <Input style={styles.input} placeholder="Vinculo Institucional" onChangeText={this.handleVinculo}/>
-                        </Item>
-                    </Form>
-                    <Content style={styles.checkBoxContent}>
+                <TextInput style={styles.input}
+                    onChangeText={this.handleCargo}
+                    placeholder='Cargo'
+                    placeholderTextColor='#2f4f4f'/>
+
+                <TextInput style={styles.input}
+                    onChangeText={this.handleVinculo}
+                    placeholder='Vinculo Institucional'
+                    placeholderTextColor='#2f4f4f'
+                />
+                <Text style={styles.termoAceitacao}>Termo de aceitação</Text>
+                <View style={styles.checkBoxContent}>
                         <ListItem>
                             <CheckBox checked={this.state.termoAceito} onPress={this.checkTermoAceito} color="red"/>
-                                <Body>
-                                    <Text style={{ marginLeft: 10 }} >Concordo que falsificar quaisquer dados do cadastro é crime</Text>
-                                </Body>
+                                <Text style={{ marginLeft: 10, fontSize: 15}} >Concordo que falsificar quaisquer dados do cadastro é crime</Text>
                         </ListItem>
-                    </Content>
-                    <Content style={styles.buttonContent}>
-                        <Button full rounded danger style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
-                        <Button full rounded warning style={styles.button} onPress={this.handleCancel}><Text style={styles.text}>Voltar</Text></Button>
-                    </Content>
-                </Content>
-            </Container>
+                </View>
+                <View style={{marginBottom:50}}>                
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
+                        <Text style={styles.buttonText}>ENTRAR</Text>
+                    </TouchableOpacity>                   
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
+                        <Text style={styles.buttonText}>CANCELAR</Text>
+                    </TouchableOpacity>   
+                </View>
+            </View>
         );
     }
 }
@@ -75,31 +73,53 @@ class DefesaCivilForm extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignContent: 'center'
+        padding: 20
     },
     input: {
-        width: '80%',
-        textAlign: 'center'
+        height: 50,
+        fontSize: 20,
+        borderBottomWidth: 1,
+        marginBottom: 25,
+        padding: 10,
+        color: '#2f4f4f',
+        textAlign: 'center',
     },
-    button:{
-        marginTop: 10,
+    termoAceitacao: {
+        height: 35,
+        marginTop: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#2f4f4f',
+        textAlign: 'center',
+        borderWidth: 2,
+        borderColor: "red",
+        borderRadius: 10,
+        padding: 5,
     },
-    text: {
-        color: 'white',
-        fontSize: 18,
-        padding: 15
+    buttonContainer: {
+        backgroundColor: '#fff',
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 20,
     },
-    buttonContent: {
-        marginTop: 40,
-        marginBottom: 0,
+    buttonText: {
+        color: '#000000',
+        textAlign: 'center',
+        fontWeight: '700'
+    },
+    loginButton: {
+        backgroundColor: '#2980b6',
+        color: '#fff'
     },
     checkBoxContent: {
         marginTop: 15,
-        marginBottom: 0,
+        marginBottom: 35,
     }
+
 });
 
 //make this component available to the app
-export default withRouter(DefesaCivilForm);
+export default DefesaCivilForm;
