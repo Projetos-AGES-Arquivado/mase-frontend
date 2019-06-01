@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         // position: 'absolute',
+        marginTop: 70,
         width: 400,
         height: 150
     },

@@ -1,12 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
 import { NativeRouter, Route, Link } from "react-router-native";
-
-const onButtonPress = () => {
-    Alert.alert(`Success!`);
-};
-
+import axios from 'react-native-axios';
 
 // create a component
 class LoginForm extends Component {
@@ -24,6 +20,25 @@ class LoginForm extends Component {
     handlePasswordChange = (password) => {
         this.setState({ password: password })
     }
+    handleSubmit = () => {
+        console.log('10.0.2.2')
+        fetch('http://10.0.2.2:8081/login', {
+                method: 'POST',
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+            email: this.state.email,
+            password: this.state.password,
+          })
+        }).then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
 
     render() {
         console.log(this.state)
@@ -38,7 +53,8 @@ class LoginForm extends Component {
                     keyboardType='email-address'
                     returnKeyType="next"
                     placeholder='Email'
-                    placeholderTextColor='#2f4f4f' />
+                    placeholderTextColor='#2f4f4f'
+                    textContentType="emailAddress" />
 
                 <TextInput style={styles.input}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
@@ -47,14 +63,15 @@ class LoginForm extends Component {
                     placeholderTextColor='#2f4f4f'
                     secureTextEntry />
                 {/*   <Button onPress={onButtonPress} title = 'Login' style={styles.loginButton} /> */}
-                <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-                    <Text style={styles.buttonText}>ENTRAR</Text>
-                </TouchableOpacity>
-                
-                <Link to="/cadastro" underlayColor="#f0f4f7" style={styles.buttonContainer2}>
-                    <Text style={styles.buttonText}>CADASTRAR</Text>
-                    {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
-                </Link>
+                <View style={{marginBottom:50}}>                
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
+                        <Text style={styles.buttonText}>ENTRAR</Text>
+                    </TouchableOpacity>                   
+                    <Link to="/cadastro" underlayColor="#f0f4f7" style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}>CADASTRAR</Text>
+                        {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
+                    </Link>
+                </View>
             </View>
         );
     }
@@ -67,21 +84,11 @@ const styles = StyleSheet.create({
     },
     input: {
         height: 50,
-        backgroundColor: 'rgba(225,225,225,0.2)',
-        marginBottom: 70,
-        padding: 10,
-        color: '#fff',
-        textAlign: 'center',
-    },
-    buttonContainer2: {
-        backgroundColor: '#fff',
-        paddingVertical: 15,
+        borderBottomWidth: 1,
         marginBottom: 50,
-        borderWidth: 1,
-        borderStyle: 'solid',
-        borderColor: 'black',
-        borderRadius: 10,
-        
+        padding: 10,
+        color: '#2f4f4f',
+        textAlign: 'center',
     },
     buttonContainer: {
         backgroundColor: '#fff',
@@ -90,7 +97,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
         borderColor: 'black',
-        borderRadius: 10,
+        borderRadius: 20,
     },
     buttonText: {
         color: '#000000',
