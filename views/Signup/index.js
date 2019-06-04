@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
+import { View,Image,Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
 import Wapper from '../Generic/Wrapper';
 import { NativeRouter, Route, Link } from "react-router-native";
 
@@ -29,8 +29,29 @@ class LoginForm extends Component {
     render() {
         console.log(this.state)
         return (
-            <Wapper>
                 <View style={styles.container}>
+                    <Image style={styles.logo} source={require('../../assets/anonimo.png')} />
+                
+                    <TextInput style={styles.input}
+                        autoCapitalize="none"
+                        onSubmitEditing={() => this.passwordInput.focus()}
+                        onChangeText={this.handleEmailChange}
+                        autoCorrect={false}
+                        keyboardType='email-address'
+                        returnKeyT Numype="next"
+                        placeholder='Nome'
+                        placeholderTextColor='#2f4f4f' />
+
+                    <TextInput style={styles.input}
+                        autoCapitalize="none"
+                        onSubmitEditing={() => this.passwordInput.focus()}
+                        onChangeText={this.handleEmailChange}
+                        autoCorrect={false}
+                        keyboardType='email-address'
+                        returnKeyT Numype="next"
+                        placeholder='Sobrenome'
+                        placeholderTextColor='#2f4f4f' />
+
                     <TextInput style={styles.input}
                         autoCapitalize="none"
                         onSubmitEditing={() => this.passwordInput.focus()}
@@ -39,7 +60,7 @@ class LoginForm extends Component {
                         keyboardType='email-address'
                         returnKeyT Numype="next"
                         placeholder='Email'
-                        placeholderTextColor='rgba(225,225,225,0.7)' />
+                        placeholderTextColor='#2f4f4f' />
 
                     <TextInput style={styles.input}
                         autoCapitalize="none"
@@ -49,7 +70,7 @@ class LoginForm extends Component {
                         keyboardType='email-address'
                         returnKeyT Numype="next"
                         placeholder='Telefone'
-                        placeholderTextColor='rgba(225,225,225,0.7)' />
+                        placeholderTextColor='#2f4f4f' />
 
                     <TextInput style={styles.input}
                         autoCapitalize="none"
@@ -58,23 +79,23 @@ class LoginForm extends Component {
                         autoCorrect={false}
                         keyboardType='email-address'
                         returnKeyT Numype="next"
-                        placeholder='Nome'
-                        placeholderTextColor='rgba(225,225,225,0.7)' />
+                        placeholder='CPF'
+                        placeholderTextColor='#2f4f4f' />
 
                     <TextInput style={styles.input}
                         returnKeyType="go" ref={(input) => this.passwordInput = input}
                         onChangeText={this.handlePasswordChange}
                         placeholder='Senha'
-                        placeholderTextColor='rgba(225,225,225,0.7)'
+                        placeholderTextColor='#2f4f4f'
                         secureTextEntry />
+
                     <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-                        <Text style={styles.buttonText}>Cadastrar</Text>
+                        <Text style={styles.buttonText}>CADASTRAR</Text>
                     </TouchableOpacity>
-                    <Link to="/" underlayColor="#f0f4f7" style={styles.buttonContainer2}>
-                        <Text style={styles.buttonText}>Voltar para Login</Text>
+                    <Link to="/" underlayColor="#f0f4f7" style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}>VOLTAR PARA LOGIN</Text>
                     </Link>
                 </View>
-            </Wapper>
         );
     }
 }
@@ -85,22 +106,32 @@ const styles = StyleSheet.create({
         padding: 20,
     },
     input: {
-        height: 40,
-        backgroundColor: 'rgba(225,225,225,0.2)',
-        marginBottom: 10,
+        height: 50,
+        borderBottomWidth: 1,
+        marginBottom: 40,
         padding: 10,
-        color: '#fff'
-    },
-    buttonContainer2: {
-        backgroundColor: '#46a8e4',
-        paddingVertical: 5,
+        color: '#2f4f4f',
+        textAlign: 'center',
     },
     buttonContainer: {
-        backgroundColor: '#2980b6',
+        backgroundColor: '#fff',
         paddingVertical: 15,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 20,
+    },
+    logo: {
+        resizeMode: "contain",
+        marginTop: 70,
+        marginBottom: 20,
+        width: 380,
+        height: 150,
+        borderRadius: 40,
     },
     buttonText: {
-        color: '#fff',
+        color: '#000000',
         textAlign: 'center',
         fontWeight: '700'
     },
