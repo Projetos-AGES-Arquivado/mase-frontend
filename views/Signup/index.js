@@ -1,6 +1,7 @@
 //import liraries
 import React, { Component } from 'react';
-import { View,Image,Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
+import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
+import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
 import Wapper from '../Generic/Wrapper';
 import { NativeRouter, Route, Link } from "react-router-native";
 
@@ -29,73 +30,96 @@ class LoginForm extends Component {
     render() {
         console.log(this.state)
         return (
-                <View style={styles.container}>
-                    <Image style={styles.logo} source={require('../../assets/anonimo.png')} />
+            <ScrollView style={styles.container}>
+                <Image style={styles.logo} source={require('../../assets/anonimo.png')} />
+
+                <TextInput style={styles.input}
+                    autoCapitalize="words"
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={this.handleEmailChange}
+                    autoCorrect={false}
+                    returnKeyT Numype="next"
+                    placeholder='Nome'
+                    placeholderTextColor='#2f4f4f' />
+
+                <TextInput style={styles.input}
+                    autoCapitalize="words"
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={this.handleEmailChange}
+                    autoCorrect={false}
+                    returnKeyT Numype="next"
+                    placeholder='Sobrenome'
+                    placeholderTextColor='#2f4f4f' />
+
+                <TextInput style={styles.input}
+                    autoCapitalize="none"
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={this.handleEmailChange}
+                    autoCorrect={false}
+                    keyboardType='phone-pad'
+                    returnKeyT Numype="next"
+                    placeholder='Telefone'
+                    placeholderTextColor='#2f4f4f' />
+
+                <TextInput style={styles.input}
+                    autoCapitalize="none"
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={this.handleEmailChange}
+                    autoCorrect={false}
+                    keyboardType='numeric'
+                    returnKeyT Numype="next"
+                    placeholder='CPF'
+                    placeholderTextColor='#2f4f4f' />
+
+                <TextInput style={styles.input}
+                    autoCapitalize="none"
+                    onSubmitEditing={() => this.passwordInput.focus()}
+                    onChangeText={this.handleEmailChange}
+                    autoCorrect={false}
+                    keyboardType='email-address'
+                    returnKeyT Numype="next"
+                    placeholder='Email'
+                    placeholderTextColor='#2f4f4f' />
+
+                <TextInput style={styles.input}
+                    returnKeyType="go" ref={(input) => this.passwordInput = input}
+                    onChangeText={this.handlePasswordChange}
+                    placeholder='Senha'
+                    placeholderTextColor='#2f4f4f'
+                    secureTextEntry />
+
+                <Text style={styles.buttonText}>Tipo de Perfil:</Text>
+
+                    <Content>
+                        <ListItem>
+                            <CheckBox checked={false} color="red" />
+                            <Body>
+                                <Text>  Não Voluntário</Text>
+                            </Body>
+                        </ListItem>
+
+                        <ListItem>
+                            <CheckBox checked={false} color="red" />
+                            <Body>
+                                <Text>  Voluntário</Text>
+                            </Body>
+                        </ListItem>
+                        
+                        <ListItem>
+                            <CheckBox checked={false} color="red" />
+                            <Body>
+                                <Text>  Defesa Civil</Text>
+                            </Body>
+                        </ListItem>
+                    </Content>
                 
-                    <TextInput style={styles.input}
-                        autoCapitalize="none"
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={this.handleEmailChange}
-                        autoCorrect={false}
-                        keyboardType='email-address'
-                        returnKeyT Numype="next"
-                        placeholder='Nome'
-                        placeholderTextColor='#2f4f4f' />
-
-                    <TextInput style={styles.input}
-                        autoCapitalize="none"
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={this.handleEmailChange}
-                        autoCorrect={false}
-                        keyboardType='email-address'
-                        returnKeyT Numype="next"
-                        placeholder='Sobrenome'
-                        placeholderTextColor='#2f4f4f' />
-
-                    <TextInput style={styles.input}
-                        autoCapitalize="none"
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={this.handleEmailChange}
-                        autoCorrect={false}
-                        keyboardType='email-address'
-                        returnKeyT Numype="next"
-                        placeholder='Email'
-                        placeholderTextColor='#2f4f4f' />
-
-                    <TextInput style={styles.input}
-                        autoCapitalize="none"
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={this.handleEmailChange}
-                        autoCorrect={false}
-                        keyboardType='email-address'
-                        returnKeyT Numype="next"
-                        placeholder='Telefone'
-                        placeholderTextColor='#2f4f4f' />
-
-                    <TextInput style={styles.input}
-                        autoCapitalize="none"
-                        onSubmitEditing={() => this.passwordInput.focus()}
-                        onChangeText={this.handleEmailChange}
-                        autoCorrect={false}
-                        keyboardType='email-address'
-                        returnKeyT Numype="next"
-                        placeholder='CPF'
-                        placeholderTextColor='#2f4f4f' />
-
-                    <TextInput style={styles.input}
-                        returnKeyType="go" ref={(input) => this.passwordInput = input}
-                        onChangeText={this.handlePasswordChange}
-                        placeholder='Senha'
-                        placeholderTextColor='#2f4f4f'
-                        secureTextEntry />
-
-                    <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-                        <Text style={styles.buttonText}>CADASTRAR</Text>
-                    </TouchableOpacity>
-                    <Link to="/" underlayColor="#f0f4f7" style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}>VOLTAR PARA LOGIN</Text>
-                    </Link>
-                </View>
+                <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
+                    <Text style={styles.buttonText}>CADASTRAR</Text>
+                </TouchableOpacity>
+                <Link to="/" underlayColor="#f0f4f7" style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>VOLTAR PARA LOGIN</Text>
+                </Link>
+            </ScrollView>
         );
     }
 }
@@ -124,7 +148,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         resizeMode: "contain",
-        marginTop: 70,
+        marginTop: 30,
         marginBottom: 20,
         width: 380,
         height: 150,
