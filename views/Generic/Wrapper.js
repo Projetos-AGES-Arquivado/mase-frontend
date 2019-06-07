@@ -21,12 +21,12 @@ class Wapper extends Component {
 // define your styles
 const styles = StyleSheet.create({
     header: {
-        color: "#d3d3d3",
+        color: "#F8F9FF",
         fontSize: 50,
     },
     container: {
         flex: 1,
-        backgroundColor: '#2c3e50',
+        backgroundColor: '#F8F9FF',
     },
     loginContainer:{
         alignItems: 'center',
@@ -35,17 +35,9 @@ const styles = StyleSheet.create({
     },
     logo: {
         // position: 'absolute',
-        width: 300,
-        height: 100,
-        borderRadius: 1000,
-        marginTop: 100
-    },
-    title:{
-        color: "#FFF",
-        marginTop: 120,
-        width: 180,
-        textAlign: 'center',
-        opacity: 0.9
+        marginTop: 70,
+        width: 400,
+        height: 150
     },
     formContainer: {
         flexDirection: 'column',
