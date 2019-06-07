@@ -11,7 +11,7 @@ import {
   StatusBar,
   Input
 } from "react-native";
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route, Link, withRouter} from "react-router-native";
 import { AsyncStorage } from "react-native";
 // create a component
 class LoginForm extends Component {
@@ -32,7 +32,6 @@ class LoginForm extends Component {
   };
 
   handleSubmit = async () => {
-    let mensagem = "";
     //console.log('10.0.2.2')
     await fetch("http://10.0.2.2:8081/login", {
       method: "POST",
@@ -45,8 +44,13 @@ class LoginForm extends Component {
         password: this.state.password
       })
     })
-      .then(response => response.json())
-      .then(function(data) {
+    .then(response => {
+        if (!response.ok) {
+            this.setState({ emailError:  "Email ou senha estão inválidos, favor digitar corretamente!"});
+        }
+        return response.json()
+        })
+      .then((data) => {
         console.log(data);
         if (data && data.token) {
           AsyncStorage.multiSet([
@@ -55,10 +59,12 @@ class LoginForm extends Component {
             ["role", data.role],
             ["expires", String(data.expires)]
           ]);
+          this.props.history.push('/cadastro');
         }
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error);
+        this.setState({ emailError:  "Erro de conexão!"});
       });
   };
 
@@ -154,4 +160,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default LoginForm;
+export default withRouter(LoginForm);
