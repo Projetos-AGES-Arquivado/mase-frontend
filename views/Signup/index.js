@@ -16,7 +16,11 @@ class LoginForm extends Component {
         super(props)
         this.state = {
             password: '',
-            email: ''
+            email: '',
+            cpf: '',
+            telefone: '',
+            nome: '',
+            sobrenome: ''
         }
     }
 
@@ -25,6 +29,18 @@ class LoginForm extends Component {
     }
     handlePasswordChange = (password) => {
         this.setState({ password: password })
+    }
+    handleCPFChange = (cpf) => {
+        this.setState({ cpf: cpf })
+    }
+    handleTelefoneChange = (telefone) => {
+        this.setState({ telefone: telefone })
+    }
+    handleNomeChange = (nome) => {
+        this.setState({ nome: nome })
+    }
+    handleSobrenomeChange = (sobrenome) => {
+        this.setState({ sobrenome: sobrenome })
     }
 
     render() {
@@ -36,7 +52,7 @@ class LoginForm extends Component {
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    onChangeText={this.handleEmailChange}
+                    onChangeText={this.handleNomeChange}
                     autoCorrect={false}
                     returnKeyT Numype="next"
                     placeholder='Nome'
@@ -45,7 +61,7 @@ class LoginForm extends Component {
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    onChangeText={this.handleEmailChange}
+                    onChangeText={this.handleSobrenomeChange}
                     autoCorrect={false}
                     returnKeyT Numype="next"
                     placeholder='Sobrenome'
@@ -54,7 +70,7 @@ class LoginForm extends Component {
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    onChangeText={this.handleEmailChange}
+                    onChangeText={this.handleTelefoneChange}
                     autoCorrect={false}
                     keyboardType='phone-pad'
                     returnKeyT Numype="next"
@@ -64,7 +80,7 @@ class LoginForm extends Component {
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}
-                    onChangeText={this.handleEmailChange}
+                    onChangeText={this.handleCPFChange}
                     autoCorrect={false}
                     keyboardType='numeric'
                     returnKeyT Numype="next"
