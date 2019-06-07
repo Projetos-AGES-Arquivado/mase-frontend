@@ -69,7 +69,6 @@ class LoginForm extends Component {
   };
 
   render() {
-    AsyncStorage.getItem("role").then(console.log);
     return (
       <View style={styles.container}>
         <StatusBar barStyle="light-content" />
