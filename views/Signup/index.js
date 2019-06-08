@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
 import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
 import Wapper from '../Generic/Wrapper';
-import { NativeRouter, Route, Link } from "react-router-native";
+import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 
 const onButtonPress = () => {
     Alert.alert(`Success!`);
@@ -15,32 +15,123 @@ class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            password: '',
-            email: '',
-            cpf: '',
-            telefone: '',
-            nome: '',
-            sobrenome: ''
+            usuario: {
+                nome: '',
+                sobrenome: '',
+                password: '',
+                cpf: '',
+                email: '',
+                telefone: '',
+            },
+            naoVoluntario: false,
+            voluntario: false,
+            defesaCivil: false,
+            msgNome: '',
+            msgSobrenome: '',
+            msgPerfilError: '', 
+            msgGeral: '',
         }
     }
 
     handleEmailChange = (email) => {
-        this.setState({ email: email })
+            this.setState({ usuario: { email }, email: ''})
     }
+    
     handlePasswordChange = (password) => {
-        this.setState({ password: password })
+        this.setState({ usuario: { password }})
     }
+
     handleCPFChange = (cpf) => {
-        this.setState({ cpf: cpf })
+        if(this.validaCPF(cpf)){
+            this.setState({ usuario: { cpf }, msgCpf: ''})
+        } else{
+            this.setState({ usuario: { cpf }, msgCpf: 'Digite um cpf válido!'})
+        }
     }
+
     handleTelefoneChange = (telefone) => {
-        this.setState({ telefone: telefone })
+        this.setState({ usuario: { telefone }})
     }
+
     handleNomeChange = (nome) => {
-        this.setState({ nome: nome })
+        if(nome.length === 0){
+            this.setState({ msgNome: "Campo obrigatório!" })
+        }else{
+            this.setState({ usuario: { nome }, msgNome: ''});
+        }
     }
     handleSobrenomeChange = (sobrenome) => {
-        this.setState({ sobrenome: sobrenome })
+        if(sobrenome.length === 0){
+            this.setState({msgSobrenome: "Campo obrigatório!" })
+        }else{
+            this.setState({ usuario: { sobrenome }, msgSobrenome: ''});
+        }
+    }
+
+    checkNaoVoluntario = () => {
+        this.setState({ naoVoluntario: true, voluntario: false, defesaCivil: false})
+    }
+
+    checkVoluntario = () => {
+        this.setState({ naoVoluntario: false, voluntario: true, defesaCivil: false})
+    }
+
+    checkDefesaCivil = () => {
+        this.setState({ naoVoluntario: false, voluntario: false, defesaCivil: true})
+    }
+
+    handleVoltar = () => {
+        this.props.history.push(';/');
+    }
+
+    validaCPF = (cpf) => {
+        var numeros, digitos, soma, i, resultado, digitos_iguais;
+        digitos_iguais = 1;
+        if (cpf.length < 11)
+              return false;
+        for (i = 0; i < cpf.length - 1; i++)
+              if (cpf.charAt(i) != cpf.charAt(i + 1))
+                    {
+                    digitos_iguais = 0;
+                    break;
+                    }
+        if (!digitos_iguais)
+              {
+              numeros = cpf.substring(0,9);
+              digitos = cpf.substring(9);
+              soma = 0;
+              for (i = 10; i > 1; i--)
+                    soma += numeros.charAt(10 - i) * i;
+              resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+              if (resultado != digitos.charAt(0))
+                    return false;
+              numeros = cpf.substring(0,10);
+              soma = 0;
+              for (i = 11; i > 1; i--)
+                    soma += numeros.charAt(11 - i) * i;
+              resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+              if (resultado != digitos.charAt(1))
+                    return false;
+              return true;
+              }
+        else
+            return false;
+    } 
+    checkFormulario = () => {
+        if (this.state.msgPerfilError.length > 0 ||
+             this.state.msgNome.length > 0 ||
+             this.state.msgSobrenome.length > 0 ||
+             this.state.msgCpf.length > 0 ||
+             this.state.msgEmail.length > 0){
+            this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
+        }
+    }
+
+    handleContinue = () => {
+        if (!this.state.voluntario || !this.state.naoVoluntario || !this.state.defesaCivil ){
+            this.setState({ msgPerfilError: "É necessário selecionar um tipo de perfil!" });
+        }
+        this.checkFormulario();
     }
 
     render() {
@@ -57,7 +148,9 @@ class LoginForm extends Component {
                     returnKeyT Numype="next"
                     placeholder='Nome'
                     placeholderTextColor='#2f4f4f' />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgNome}</Text>
+                </View>
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}
@@ -66,7 +159,9 @@ class LoginForm extends Component {
                     returnKeyT Numype="next"
                     placeholder='Sobrenome'
                     placeholderTextColor='#2f4f4f' />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgSobrenome}</Text>
+                </View>
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}
@@ -76,7 +171,9 @@ class LoginForm extends Component {
                     returnKeyT Numype="next"
                     placeholder='Telefone'
                     placeholderTextColor='#2f4f4f' />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgTelefeone}</Text>
+                </View>
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}
@@ -86,55 +183,68 @@ class LoginForm extends Component {
                     returnKeyT Numype="next"
                     placeholder='CPF'
                     placeholderTextColor='#2f4f4f' />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgCpf}</Text>
+                </View>
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}
                     onChangeText={this.handleEmailChange}
                     autoCorrect={false}
+                    type="email"
                     keyboardType='email-address'
                     returnKeyT Numype="next"
                     placeholder='Email'
                     placeholderTextColor='#2f4f4f' />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgEmail}</Text>
+                </View>
                 <TextInput style={styles.input}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
                     onChangeText={this.handlePasswordChange}
                     placeholder='Senha'
                     placeholderTextColor='#2f4f4f'
                     secureTextEntry />
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgSenha}</Text>
+                </View>
                 <Text style={styles.buttonText}>Tipo de Perfil:</Text>
-
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgPerfilError}</Text>
+                </View>
                     <Content>
                         <ListItem>
-                            <CheckBox checked={false} color="red" />
+                            <CheckBox checked={this.state.naoVoluntario} onPress={this.checkNaoVoluntario} color="red" />
                             <Body>
                                 <Text>  Não Voluntário</Text>
                             </Body>
                         </ListItem>
 
                         <ListItem>
-                            <CheckBox checked={false} color="red" />
+                            <CheckBox checked={this.state.voluntario} onPress={this.checkVoluntario} color="red" />
                             <Body>
                                 <Text>  Voluntário</Text>
                             </Body>
                         </ListItem>
                         
                         <ListItem>
-                            <CheckBox checked={false} color="red" />
+                            <CheckBox checked={this.state.defesaCivil} onPress={this.checkDefesaCivil} color="red" />
                             <Body>
                                 <Text>  Defesa Civil</Text>
                             </Body>
                         </ListItem>
                     </Content>
-                
-                <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-                    <Text style={styles.buttonText}>CADASTRAR</Text>
-                </TouchableOpacity>
-                <Link to="/" underlayColor="#f0f4f7" style={styles.buttonContainer}>
-                    <Text style={styles.buttonText}>VOLTAR PARA LOGIN</Text>
-                </Link>
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgGeral}</Text>
+                </View>
+                <View style={styles.buttonsView}>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleContinue}>
+                        <Text style={styles.buttonText}>CONTINUAR</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleVoltar}>
+                        <Text style={styles.buttonText}>VOLTAR</Text>
+                    </TouchableOpacity>
+                </View>
             </ScrollView>
         );
     }
@@ -148,7 +258,6 @@ const styles = StyleSheet.create({
     input: {
         height: 50,
         borderBottomWidth: 1,
-        marginBottom: 40,
         padding: 10,
         color: '#2f4f4f',
         textAlign: 'center',
@@ -178,9 +287,24 @@ const styles = StyleSheet.create({
     loginButton: {
         backgroundColor: '#2980b6',
         color: '#fff'
-    }
+    },
 
+    buttonsView: {
+        marginBottom: 30,
+    },  
+
+    msgError:{
+        color: 'red', 
+        fontSize: 13, 
+        marginBottom: 7,
+        marginTop: 7,
+        textAlign: 'center',
+    },
+
+    msgErrorView: {
+        margin: 0,
+    }
 });
 
 //make this component available to the app
-export default LoginForm;
+export default withRouter(LoginForm);
