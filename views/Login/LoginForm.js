@@ -79,6 +79,12 @@ class LoginForm extends Component {
                         <Text style={styles.buttonText}>CADASTRAR</Text>
                         {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
                     </Link>
+
+                    <Link to="/cadastroF" underlayColor="#f0f4f7" style={styles.buttonContainer}>
+                        <Text style={styles.buttonText}>Cadastro Funcionário</Text>
+                        {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
+                    </Link>                  
+                    
                 </View>
             </View>
         );

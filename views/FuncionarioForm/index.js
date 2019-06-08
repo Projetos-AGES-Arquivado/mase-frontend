@@ -30,9 +30,19 @@ class LoginForm extends Component {
             msgSobrenome: '',
             msgPerfilError: '', 
             msgGeral: '',
+            termoAceito: false,
+            cargo: '',
+            vinculo: ''
         }
     }
 
+    checkTermoAceito = () => {
+        if(this.state.termoAceito === false){
+            this.setState({ termoAceito: true })  
+        } else{
+            this.setState({ termoAceito: false })
+        }
+    }
     handleEmailChange = (email) => {
             this.setState({ usuario: { email }, email: ''})
     }
@@ -199,7 +209,7 @@ class LoginForm extends Component {
                 <View style={styles.msgErrorView}>
                     <Text style={styles.msgError}>{this.state.msgEmail}</Text>
                 </View>
-                <TextInput style={styles.input}
+                <TextInput style={styles.inputSenha}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
                     onChangeText={this.handlePasswordChange}
                     placeholder='Senha'
@@ -208,35 +218,30 @@ class LoginForm extends Component {
                 <View style={styles.msgErrorView}>
                     <Text style={styles.msgError}>{this.state.msgSenha}</Text>
                 </View>
-                <Text style={styles.buttonText}>Tipo de Perfil:</Text>
-                <View style={styles.msgErrorView}>
-                    <Text style={styles.msgError}>{this.state.msgPerfilError}</Text>
-                </View>
-                    <Content>
-                        <ListItem>
-                            <CheckBox checked={this.state.naoVoluntario} onPress={this.checkNaoVoluntario} color="red" />
-                            <Body>
-                                <Text>  Não Voluntário</Text>
-                            </Body>
-                        </ListItem>
 
+                <Text style={styles.termoAceitacao}>Dados da Defesa Civíl</Text>
+                <TextInput style={styles.inputSenha}
+                    onChangeText={this.handleCargo}
+                    placeholder='Cargo'
+                    placeholderTextColor='#2f4f4f'/>
+
+                <TextInput style={styles.inputSenha}
+                    onChangeText={this.handleVinculo}
+                    placeholder='Vinculo Institucional'
+                    placeholderTextColor='#2f4f4f'/>
+
+                <Text style={styles.termoAceitacao}>Termo de aceitação</Text>
+                <View style={styles.checkBoxContent}>
                         <ListItem>
-                            <CheckBox checked={this.state.voluntario} onPress={this.checkVoluntario} color="red" />
-                            <Body>
-                                <Text>  Voluntário</Text>
-                            </Body>
+                            <CheckBox checked={this.state.termoAceito} onPress={this.checkTermoAceito} color="red"/>
+                                <Text style={{ marginLeft: 10, fontSize: 15}} >Concordo que falsificar quaisquer dados do cadastro é crime</Text>
                         </ListItem>
-                        
-                        <ListItem>
-                            <CheckBox checked={this.state.defesaCivil} onPress={this.checkDefesaCivil} color="red" />
-                            <Body>
-                                <Text>  Defesa Civil</Text>
-                            </Body>
-                        </ListItem>
-                    </Content>
+                </View>
+
                 <View style={styles.msgErrorView}>
                     <Text style={styles.msgError}>{this.state.msgGeral}</Text>
                 </View>
+
                 <View style={styles.buttonsView}>
                     <TouchableOpacity style={styles.buttonContainer} onPress={this.handleContinue}>
                         <Text style={styles.buttonText}>CONTINUAR</Text>
@@ -262,6 +267,14 @@ const styles = StyleSheet.create({
         color: '#2f4f4f',
         textAlign: 'center',
     },
+    inputSenha: {
+        height: 50,
+        borderBottomWidth: 1,
+        padding: 10,
+        color: '#2f4f4f',
+        textAlign: 'center',
+        marginBottom: 25
+    },
     buttonContainer: {
         backgroundColor: '#fff',
         paddingVertical: 15,
@@ -270,6 +283,18 @@ const styles = StyleSheet.create({
         borderStyle: 'solid',
         borderColor: 'black',
         borderRadius: 20,
+    },
+    termoAceitacao: {
+        height: 35,
+        marginTop: 20,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#2f4f4f',
+        textAlign: 'center',
+        borderWidth: 2,
+        borderColor: "red",
+        borderRadius: 10,
+        padding: 5,
     },
     logo: {
         resizeMode: "contain",
@@ -303,6 +328,10 @@ const styles = StyleSheet.create({
 
     msgErrorView: {
         margin: 0,
+    },
+    checkBoxContent: {
+        marginTop: 15,
+        marginBottom: 5,
     }
 });
 
