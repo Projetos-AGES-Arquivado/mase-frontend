@@ -30,15 +30,28 @@ class LoginForm extends Component {
             msgSobrenome: '',
             msgPerfilError: '', 
             msgGeral: '',
+            msgTelefeone: '',
+            msgCpf: '',
+            msgSenha: '',
+            msgEmail: '',
+            
         }
     }
 
     handleEmailChange = (email) => {
-            this.setState({ usuario: { email }, email: ''})
+        if(this.validaEmail(email)){
+            this.setState({ usuario: { email }, msgEmail: ''})
+        } else{
+            this.setState({ usuario: { email }, msgEmail: 'Digite um email válido!'})
+        }
     }
     
     handlePasswordChange = (password) => {
-        this.setState({ usuario: { password }})
+        if(this.validaSenha(password)){
+            this.setState({ usuario: { password }, msgSenha: ''})
+        } else{
+            this.setState({ usuario: { password }, msgSenha: 'Sua senha deve possuir no mínimo 8 caractéres'})
+        }
     }
 
     handleCPFChange = (cpf) => {
@@ -50,7 +63,11 @@ class LoginForm extends Component {
     }
 
     handleTelefoneChange = (telefone) => {
-        this.setState({ usuario: { telefone }})
+        if(this.validaTelefone(telefone)){
+            this.setState({ usuario: { telefone }, msgTelefone: '' })
+        } else{
+            this.setState({ usuario: { telefone }, msgTelefone: 'Digite um telefone válido!' })
+        }
     }
 
     handleNomeChange = (nome) => {
@@ -81,7 +98,7 @@ class LoginForm extends Component {
     }
 
     handleVoltar = () => {
-        this.props.history.push(';/');
+        this.props.history.push('/');
     }
 
     validaCPF = (cpf) => {
@@ -117,21 +134,56 @@ class LoginForm extends Component {
         else
             return false;
     } 
+
+    validaEmail = (email) => {
+        var str = email;
+        var filtro = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/;
+        if(filtro.test(str)) {
+            return true;
+       } else {
+           return false;
+        }
+    }
+
+    validaTelefone = (telefone)  => {
+        var regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$');
+        return regex.test(telefone);
+    }
+
+    validaSenha = (senha) =>{
+        var str = senha;
+        var filtro = /[a-zA-Z0-9]{8,12}$/;
+        if(filtro.test(str)) {
+            return true;
+       } else {
+           return false;
+        }
+    }
+
     checkFormulario = () => {
         if (this.state.msgPerfilError.length > 0 ||
              this.state.msgNome.length > 0 ||
              this.state.msgSobrenome.length > 0 ||
              this.state.msgCpf.length > 0 ||
-             this.state.msgEmail.length > 0){
+             this.state.msgEmail.length > 0 ||
+             this.state.msgTelefeone.length > 0 ||
+             this.state.msgSenha > 0) {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
+            return false;
         }
+        return true;
     }
 
+
     handleContinue = () => {
+        if(this.checkFormulario() === false){
+            return;
+        };
         if (!this.state.voluntario || !this.state.naoVoluntario || !this.state.defesaCivil ){
-            this.setState({ msgPerfilError: "É necessário selecionar um tipo de perfil!" });
+            this.setState({ msgPerfilError: 'É necessário selecionar um tipo de perfil!' });
+        } else if(this.state.voluntario || this.state.naoVoluntario || this.state.defesaCivil) { 
+            this.setState({ msgPerfilError: '' })
         }
-        this.checkFormulario();
     }
 
     render() {
@@ -172,7 +224,7 @@ class LoginForm extends Component {
                     placeholder='Telefone'
                     placeholderTextColor='#2f4f4f' />
                 <View style={styles.msgErrorView}>
-                    <Text style={styles.msgError}>{this.state.msgTelefeone}</Text>
+                    <Text style={styles.msgError}>{this.state.msgTelefone}</Text>
                 </View>
                 <TextInput style={styles.input}
                     autoCapitalize="none"
