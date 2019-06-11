@@ -5,11 +5,6 @@ import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-bas
 import Wapper from '../Generic/Wrapper';
 import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 
-const onButtonPress = () => {
-    Alert.alert(`Success!`);
-};
-
-
 // create a component
 class LoginForm extends Component {
     constructor(props) {
@@ -209,7 +204,7 @@ class LoginForm extends Component {
                 <View style={styles.msgErrorView}>
                     <Text style={styles.msgError}>{this.state.msgEmail}</Text>
                 </View>
-                <TextInput style={styles.inputSenha}
+                <TextInput style={styles.input}
                     returnKeyType="go" ref={(input) => this.passwordInput = input}
                     onChangeText={this.handlePasswordChange}
                     placeholder='Senha'
@@ -220,12 +215,12 @@ class LoginForm extends Component {
                 </View>
 
                 <Text style={styles.termoAceitacao}>Dados da Defesa Civíl</Text>
-                <TextInput style={styles.inputSenha}
+                <TextInput style={styles.input}
                     onChangeText={this.handleCargo}
                     placeholder='Cargo'
                     placeholderTextColor='#2f4f4f'/>
 
-                <TextInput style={styles.inputSenha}
+                <TextInput style={styles.input2}
                     onChangeText={this.handleVinculo}
                     placeholder='Vinculo Institucional'
                     placeholderTextColor='#2f4f4f'/>
@@ -267,13 +262,13 @@ const styles = StyleSheet.create({
         color: '#2f4f4f',
         textAlign: 'center',
     },
-    inputSenha: {
+    input2: {
         height: 50,
         borderBottomWidth: 1,
         padding: 10,
         color: '#2f4f4f',
         textAlign: 'center',
-        marginBottom: 25
+        marginBottom: 20
     },
     buttonContainer: {
         backgroundColor: '#fff',
@@ -286,7 +281,7 @@ const styles = StyleSheet.create({
     },
     termoAceitacao: {
         height: 35,
-        marginTop: 20,
+        marginTop: 10,
         fontSize: 20,
         fontWeight: 'bold',
         color: '#2f4f4f',

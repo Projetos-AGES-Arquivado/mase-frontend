@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
 import { NativeRouter, Route, Link } from "react-router-native";
-import axios from 'react-native-axios';
 
 // create a component
 class LoginForm extends Component {
@@ -78,13 +77,7 @@ class LoginForm extends Component {
                     <Link to="/cadastro" underlayColor="#f0f4f7" style={styles.buttonContainer}>
                         <Text style={styles.buttonText}>CADASTRAR</Text>
                         {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
-                    </Link>
-
-                    <Link to="/cadastroF" underlayColor="#f0f4f7" style={styles.buttonContainer}>
-                        <Text style={styles.buttonText}>Cadastro Funcionário</Text>
-                        {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
-                    </Link>                  
-                    
+                    </Link>              
                 </View>
             </View>
         );

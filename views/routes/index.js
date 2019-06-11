@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { NativeRouter, Route, Link } from "react-router-native";
 import Login from "../Login";
 import Signup from "../Signup";
+import FuncionarioForm from '../FuncionarioForm';
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
 
-import FuncionarioForm from '../FuncionarioForm';
+
 
 function App() {
     return (
