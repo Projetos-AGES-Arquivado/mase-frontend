@@ -4,6 +4,8 @@ import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Butt
 import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
 import Wapper from '../Generic/Wrapper';
 import { NativeRouter, Route, Link, withRouter } from "react-router-native";
+import {ImagePicker, Permissions, Constants} from 'expo';
+
 
 const onButtonPress = () => {
     Alert.alert(`Success!`);
@@ -22,6 +24,7 @@ class LoginForm extends Component {
                 cpf: '',
                 email: '',
                 telefone: '',
+                imagem: '',
             },
             naoVoluntario: false,
             voluntario: false,
@@ -34,6 +37,7 @@ class LoginForm extends Component {
             msgCpf: '',
             msgSenha: '',
             msgEmail: '',
+            msgImagem: '',
             
         }
     }
@@ -167,7 +171,8 @@ class LoginForm extends Component {
              this.state.msgCpf.length > 0 ||
              this.state.msgEmail.length > 0 ||
              this.state.msgTelefeone.length > 0 ||
-             this.state.msgSenha > 0) {
+             this.state.msgSenha > 0 ||
+             this.state.msgImagem > 0) {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
             return false;
         }
@@ -186,12 +191,31 @@ class LoginForm extends Component {
         }
     }
 
+    handleChoosePhoto = async () => {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+      });
+
+      if (!result.cancelled) {
+        await this.setState({ imagem: result.uri, msgImagem: '' });
+      } else if(this.state.usuario.imagem.length === '' &&  msgImagem.length === ''){
+        this.setState({ msgImagem: "É obrigatório inserir uma imagem para seu perfil!" });
+      }
+    }
+
     render() {
         console.log(this.state)
         return (
             <ScrollView style={styles.container}>
-                <Image style={styles.logo} source={require('../../assets/anonimo.png')} />
-
+                <Image style={styles.logo} source={{ uri: this.state.imagem }} />
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgImagem}</Text>
+                </View>
+                  <TouchableOpacity style={styles.buttonContainer} onPress={this.handleChoosePhoto}>
+                        <Text style={styles.buttonText}>Escolher Foto</Text>
+                    </TouchableOpacity>
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}
