@@ -1,8 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { Container, Content, Form, Item, Input, Button, CheckBox, Body, ListItem} from 'native-base';
-import { NativeRouter, Route, Link } from "react-router-native";
-import { StyleSheet, Text } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
+import { NativeRouter, Route, Link, withRouter } from "react-router-native";
+import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
 import Header from '../Generic/Header'
 
 // create a component
@@ -46,7 +46,13 @@ class VoluntarioForm extends Component {
         this.setState({ numeroConselho });
     }
 
+    handleCancel = () => {
+        this.props.history.push('/cadastro');
+    }
+
     handleSubmit = () => {
+        console.log(this.state.termoUm)
+        console.log(this.state.termoDois)
         console.log(this.state.profissao)
         console.log(this.state.numeroConselho)
         console.log(this.state.vinculo)
@@ -54,40 +60,48 @@ class VoluntarioForm extends Component {
 
     render() {
         return (
-            <Container>
-                <Header texto="Cadastro de Voluntário" />
-                <Content>
-                    <Form>
-                        <Item>
-                            <Input style={styles.input} placeholder="Profissão" onChangeText={this.handleProfissao}/>
-                        </Item>
-                        <Item >
-                            <Input type="number" style={styles.input} placeholder="Numero Conselho" onChangeText={this.handleNumeroConselho}/>
-                        </Item>
-                        <Item>
-                            <Input style={styles.input} placeholder="Vinculo Institucional" onChangeText={this.handleVinculo}/>
-                        </Item>
-                    </Form>
-                    <Content style={styles.checkBoxContent}>
+            <View style={styles.container}>
+                <Header texto="Cadastro Voltuntário" />
+                <TextInput style={styles.input}
+                    onChangeText={this.handleProfissao}
+                    placeholder='Profissão'
+                    placeholderTextColor='#2f4f4f'
+                    keyboardType="default"
+                    />
+
+                <TextInput style={styles.input}
+                    onChangeText={this.handleNumeroConselho}
+                    placeholder="Numero Conselho"
+                    placeholderTextColor='#2f4f4f'
+                    keyboardType="numeric"
+                    type="number"
+                />
+                <TextInput style={styles.input}
+                    onChangeText={this.handleVinculo}
+                    placeholder='Vinculo Institucional'
+                    placeholderTextColor='#2f4f4f'
+                    keyboardType="default"
+                />
+                <Text style={styles.termoAceitacao}>Termo de aceitação</Text>
+                <View style={styles.checkBoxContent}>
                         <ListItem>
                             <CheckBox checked={this.state.termoUm} onPress={this.checkTermoUm} color="red"/>
-                                <Body>
-                                    <Text style={{ marginLeft: 10 }} >Concordo que falsificar quaisquer dados do cadastro é crime</Text>
-                                </Body>
+                                <Text style={{ marginLeft: 10, fontSize: 15}} >Concordo que falsificar quaisquer dados do cadastro é crime</Text>
                         </ListItem>
                         <ListItem>
                             <CheckBox checked={this.state.termoDois} onPress={this.checkTermoDois} color="red"/>
-                                <Body>
-                                    <Text style={{ marginLeft: 10 }} >Concordo dar meu constentimento jurídico de que não vou responsabilizar a Pedra Circular nem a Defesa Civil por quaisquer danos</Text>
-                                </Body>
+                                <Text style={{ marginLeft: 10, fontSize: 15 }} >Concordo dar meu constentimento jurídico de que não vou responsabilizar a Pedra Circular nem a Defesa Civil por quaisquer danos</Text>
                         </ListItem>
-                    </Content>
-                    <Content style={styles.buttonContent}>
-                        <Button full rounded danger style={styles.button} onPress={this.handleSubmit}><Text style={styles.text}>Confirmar</Text></Button>
-                        <Button full rounded warning style={styles.button}><Text style={styles.text}>Cancelar</Text></Button>
-                    </Content>
-                </Content>
-            </Container>
+                </View>
+                <View style={{marginBottom:10}}>                
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleSubmit}>
+                        <Text style={styles.buttonText}>CADASTRAR</Text>
+                    </TouchableOpacity>                   
+                    <TouchableOpacity style={styles.buttonContainer} onPress={this.handleCancel}>
+                        <Text style={styles.buttonText}>CANCELAR</Text>
+                    </TouchableOpacity>   
+                </View>
+            </View>
         );
     }
 }
@@ -95,31 +109,52 @@ class VoluntarioForm extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: 'row',
-        alignContent: 'center'
+        padding: 20
     },
     input: {
-        width: '80%',
-        textAlign: 'center'
+        height: 50,
+        fontSize: 20,
+        borderBottomWidth: 1,
+        marginBottom: 10,
+        padding: 10,
+        color: '#2f4f4f',
+        textAlign: 'center',
     },
-    button:{
+    termoAceitacao: {
+        height: 35,
         marginTop: 10,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#2f4f4f',
+        textAlign: 'center',
+        borderWidth: 2,
+        borderColor: "red",
+        borderRadius: 10,
+        padding: 5,
     },
-    text: {
-        color: 'white',
-        fontSize: 18,
-        padding: 15
+    buttonContainer: {
+        backgroundColor: '#fff',
+        paddingVertical: 15,
+        marginBottom: 10,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        borderColor: 'black',
+        borderRadius: 20,
     },
-    buttonContent: {
-        marginTop: 40,
-        marginBottom: 0,
+    buttonText: {
+        color: '#000000',
+        textAlign: 'center',
+        fontWeight: '700'
+    },
+    loginButton: {
+        backgroundColor: '#2980b6',
+        color: '#fff'
     },
     checkBoxContent: {
         marginTop: 15,
-        marginBottom: 0,
+        marginBottom: 15,
     }
+
 });
 
-//make this component available to the app
-export default VoluntarioForm;
+export default withRouter(VoluntarioForm);
