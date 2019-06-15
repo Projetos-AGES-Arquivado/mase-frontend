@@ -11,7 +11,7 @@ import {
   StatusBar,
   Input
 } from "react-native";
-import { NativeRouter, Route, Link, withRouter} from "react-router-native";
+import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 import { AsyncStorage } from "react-native";
 // create a component
 class LoginForm extends Component {
@@ -44,13 +44,16 @@ class LoginForm extends Component {
         password: this.state.password
       })
     })
-    .then(response => {
+      .then(response => {
         if (!response.ok) {
-            this.setState({ emailError:  "Email ou senha estão inválidos, favor digitar corretamente!"});
+          this.setState({
+            emailError:
+              "Email ou senha estão inválidos, favor digitar corretamente!"
+          });
         }
-        return response.json()
-        })
-      .then((data) => {
+        return response.json();
+      })
+      .then(data => {
         console.log(data);
         if (data && data.token) {
           AsyncStorage.multiSet([
@@ -59,12 +62,12 @@ class LoginForm extends Component {
             ["role", data.role],
             ["expires", String(data.expires)]
           ]);
-          this.props.history.push('/cadastro');
+          this.props.history.push("/cadastro");
         }
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
-        this.setState({ emailError:  "Erro de conexão!"});
+        this.setState({ emailError: "Erro de conexão!" });
       });
   };
 
@@ -112,10 +115,48 @@ class LoginForm extends Component {
             <Text style={styles.buttonText}>CADASTRAR</Text>
             {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
           </Link>
+          <Link
+            to="/cadastro"
+            underlayColor="#f0f4f7"
+            style={styles.buttonContainer2}
+          >
+            <Text style={styles.buttonText}>Cadastrar</Text>
+            {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
+          </Link>
+          <Link
+            to="/cadastro-voluntario"
+            underlayColor="#f0f4f7"
+            style={styles.buttonContainer2}
+          >
+            <Text style={styles.buttonText}>Cadastrar Voluntario</Text>
+            {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
+          </Link>
+          <Link
+            to="/cadastro-defesaCivil"
+            underlayColor="#f0f4f7"
+            style={styles.buttonContainer2}
+          >
+            <Text style={styles.buttonText}>Cadastrar Defesa Civil</Text>
+            {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
+          </Link>
         </View>
       </View>
     );
   }
+  //         <TextInput style={styles.input}
+  //             returnKeyType="go" ref={(input) => this.passwordInput = input}
+  //             onChangeText={this.handlePasswordChange}
+  //             placeholder='Senha'
+  //             placeholderTextColor='rgba(225,225,225,0.7)'
+  //             secureTextEntry />
+  //         {/*   <Button onPress={onButtonPress} title = 'Login' style={styles.loginButton} /> */}
+  //         <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
+  //             <Text style={styles.buttonText}>LOGIN</Text>
+  //         </TouchableOpacity>
+
+  //     </View>
+  // );
+  // }
 }
 
 // define your styles
