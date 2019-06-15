@@ -5,6 +5,8 @@ import Signup from "../Signup";
 import FuncionarioForm from "../FuncionarioForm";
 import VoluntarioForm from "../VoluntarioForm";
 import DefesaCivilForm from "../DefesaCivilForm";
+import TelaPrincipal from "../TelaPrincipal";
+
 import {
   View,
   Text,
@@ -24,6 +26,7 @@ function App() {
       <Route path="/cadastroF" component={FuncionarioForm} />
       <Route path="/cadastro-voluntario" component={VoluntarioForm} />
       <Route path="/cadastro-defesaCivil" component={DefesaCivilForm} />
+      <Route path="/telaPrincipal" component={TelaPrincipal} />
     </NativeRouter>
   );
 }
