@@ -330,6 +330,7 @@ class LoginForm extends Component {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        backgroundColor: '#fff',
     },
     input: {
         height: 50,
@@ -376,7 +377,6 @@ const styles = StyleSheet.create({
         marginTop: 7,
         textAlign: 'center',
     },
-
     msgErrorView: {
         margin: 0,
     }

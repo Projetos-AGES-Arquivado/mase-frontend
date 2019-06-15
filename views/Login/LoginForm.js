@@ -115,46 +115,16 @@ class LoginForm extends Component {
             <Text style={styles.buttonText}>CADASTRAR</Text>
             {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
           </Link>
-          <Link
-            to="/cadastro-voluntario"
-            underlayColor="#f0f4f7"
-            style={styles.buttonContainer2}
-          >
-            <Text style={styles.buttonText}>Cadastrar Voluntario</Text>
-            {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
-          </Link>
-          <Link
-            to="/cadastro-defesaCivil"
-            underlayColor="#f0f4f7"
-            style={styles.buttonContainer2}
-          >
-            <Text style={styles.buttonText}>Cadastrar Defesa Civil</Text>
-            {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
-          </Link>
         </View>
       </View>
     );
   }
-  //         <TextInput style={styles.input}
-  //             returnKeyType="go" ref={(input) => this.passwordInput = input}
-  //             onChangeText={this.handlePasswordChange}
-  //             placeholder='Senha'
-  //             placeholderTextColor='rgba(225,225,225,0.7)'
-  //             secureTextEntry />
-  //         {/*   <Button onPress={onButtonPress} title = 'Login' style={styles.loginButton} /> */}
-  //         <TouchableOpacity style={styles.buttonContainer} onPress={onButtonPress}>
-  //             <Text style={styles.buttonText}>LOGIN</Text>
-  //         </TouchableOpacity>
-
-  //     </View>
-  // );
-  // }
 }
 
 // define your styles
 const styles = StyleSheet.create({
   container: {
-    padding: 20
+    padding: 20,
   },
   input: {
     height: 50,
@@ -177,10 +147,6 @@ const styles = StyleSheet.create({
     color: "#000000",
     textAlign: "center",
     fontWeight: "700"
-  },
-  loginButton: {
-    backgroundColor: "#2980b6",
-    color: "#fff"
   },
   textError: {
     color: "#ff0000",
