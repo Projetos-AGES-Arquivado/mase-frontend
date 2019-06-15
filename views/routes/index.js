@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { NativeRouter, Route, Link } from "react-router-native";
 import Login from "../Login";
 import Signup from "../Signup";
+import FuncionarioForm from '../FuncionarioForm';
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
+
+
 
 function App() {
     return (
       <NativeRouter>
           <Route exact path="/" component={Login} />
           <Route path="/cadastro" component={Signup} />
+          <Route path="/cadastroF" component={FuncionarioForm} />
       </NativeRouter>
     );
 }
