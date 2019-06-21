@@ -21,7 +21,6 @@ class TelaPrincipalForm extends Component {
             </View>
         );
         return (
-
             <View style={styles.container}>
                 <DrawerLayoutAndroid renderNavigationView={() => drawer} drawerWidth={300}
                     statusBarBackgroundColor='#7faf77' ref={_drawer => (this.drawer = _drawer)}>

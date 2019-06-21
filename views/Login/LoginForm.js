@@ -108,7 +108,6 @@ class LoginForm extends Component {
                         <Link
                             to="/telaPrincipal"
                             underlayColor="#f0f4f7"
-                            style={styles.buttonContainer}
                         >
                             <Text style={styles.buttonText}>ENTRAR</Text>
                         </Link>
@@ -120,7 +119,6 @@ class LoginForm extends Component {
                         <Link
                             to="/cadastro"
                             underlayColor="#f0f4f7"
-                            style={styles.buttonContainer}
                         >
                             <Text style={styles.buttonText}>CADASTRAR</Text>
                             {/* <Button onPress={()=>{}} title='Cadastrar' style={styles.loginButton}/> */}
