@@ -17,15 +17,13 @@ class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            usuario: {
-                nome: '',
-                sobrenome: '',
-                password: '',
-                cpf: '',
-                email: '',
-                telefone: '',
-                imagem: '',
-            },
+            nome: '',
+            sobrenome: '',
+            password: '',
+            cpf: '',
+            email: '',
+            telefone: '',
+            imagem: '',
             naoVoluntario: false,
             voluntario: false,
             defesaCivil: false,
@@ -38,39 +36,38 @@ class LoginForm extends Component {
             msgSenha: '',
             msgEmail: '',
             msgImagem: '',
-            
         }
     }
 
     handleEmailChange = (email) => {
         if(this.validaEmail(email)){
-            this.setState({ usuario: { email }, msgEmail: ''})
+            this.setState({ email, msgEmail: ''})
         } else{
-            this.setState({ usuario: { email }, msgEmail: 'Digite um email válido!'})
+            this.setState({ email, msgEmail: 'Digite um email válido!'})
         }
     }
     
     handlePasswordChange = (password) => {
         if(this.validaSenha(password)){
-            this.setState({ usuario: { password }, msgSenha: ''})
+            this.setState({ password, msgSenha: ''})
         } else{
-            this.setState({ usuario: { password }, msgSenha: 'Sua senha deve possuir no mínimo 8 caractéres'})
+            this.setState({ password, msgSenha: 'Sua senha deve possuir no mínimo 8 caractéres'})
         }
     }
 
     handleCPFChange = (cpf) => {
         if(this.validaCPF(cpf)){
-            this.setState({ usuario: { cpf }, msgCpf: ''})
+            this.setState({ cpf, msgCpf: ''})
         } else{
-            this.setState({ usuario: { cpf }, msgCpf: 'Digite um cpf válido!'})
+            this.setState({ cpf, msgCpf: 'Digite um cpf válido!'})
         }
     }
 
     handleTelefoneChange = (telefone) => {
         if(this.validaTelefone(telefone)){
-            this.setState({ usuario: { telefone }, msgTelefone: '' })
+            this.setState({ telefone, msgTelefone: '' })
         } else{
-            this.setState({ usuario: { telefone }, msgTelefone: 'Digite um telefone válido!' })
+            this.setState({ telefone, msgTelefone: 'Digite um telefone válido!' })
         }
     }
 
@@ -78,14 +75,14 @@ class LoginForm extends Component {
         if(nome.length === 0){
             this.setState({ msgNome: "Campo obrigatório!" })
         }else{
-            this.setState({ usuario: { nome }, msgNome: ''});
+            this.setState({ nome, msgNome: ''});
         }
     }
     handleSobrenomeChange = (sobrenome) => {
         if(sobrenome.length === 0){
-            this.setState({msgSobrenome: "Campo obrigatório!" })
+            this.setState({ msgSobrenome: "Campo obrigatório!" })
         }else{
-            this.setState({ usuario: { sobrenome }, msgSobrenome: ''});
+            this.setState({ sobrenome, msgSobrenome: ''});
         }
     }
 
@@ -108,7 +105,7 @@ class LoginForm extends Component {
     validaCPF = (cpf) => {
         var numeros, digitos, soma, i, resultado, digitos_iguais;
         digitos_iguais = 1;
-        if (cpf.length < 11)
+        if (cpf.length < 11 || cpf.length > 10)
               return false;
         for (i = 0; i < cpf.length - 1; i++)
               if (cpf.charAt(i) != cpf.charAt(i + 1))
@@ -176,6 +173,7 @@ class LoginForm extends Component {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
             return false;
         }
+        this.setState({ msgGeral: "" });
         return true;
     }
 
@@ -184,10 +182,30 @@ class LoginForm extends Component {
         if(this.checkFormulario() === false){
             return;
         };
-        if (!this.state.voluntario || !this.state.naoVoluntario || !this.state.defesaCivil ){
+        if (!this.state.voluntario && !this.state.naoVoluntario && !this.state.defesaCivil ){
             this.setState({ msgPerfilError: 'É necessário selecionar um tipo de perfil!' });
         } else if(this.state.voluntario || this.state.naoVoluntario || this.state.defesaCivil) { 
-            this.setState({ msgPerfilError: '' })
+            const usuario = {
+                nome: this.state.nome,
+                sobrenome: this.state.sobrenome,
+                cpf: this.state.cpf,
+                email: this.state.email,
+                imagem: this.state.imagem,
+                password: this.state.password,
+                telefone: this.state.telefone,
+            }
+            console.log(usuario);
+            if(this.state.naoVoluntario){
+                alert("Cadastro realizado com sucesso!");
+                //cadastrar nao voluntario e direcionar para menu principals
+                //this.props.history.push("/telaPrincipal")
+            }else if(this.state.voluntario){
+                //direcionar para pagina de cadastro de voluntario
+                ////this.props.history.push("/cadastro-voluntario", state:{ usuario })
+            }else if(this.state.defesaCivil){
+                //direcionar para pagina de cadastro de defesa civil
+                //this.props.history.push("/defesa-civil", state:{ usuario })
+            }
         }
     }
 
@@ -206,7 +224,6 @@ class LoginForm extends Component {
     }
 
     render() {
-        console.log(this.state)
         return (
             <ScrollView style={styles.container}>
                 <Image style={styles.logo} source={{ uri: this.state.imagem }} />
