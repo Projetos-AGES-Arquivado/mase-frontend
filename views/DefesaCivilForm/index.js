@@ -31,10 +31,67 @@ class DefesaCivilForm extends Component {
     handleCancel = () => {
         this.props.history.push('/cadastro');
     }
-    handleSubmit = () => {
-        console.log(this.state.cargo)
-        console.log(this.state.vinculo)
-    } 
+
+    handleSubmit = async () => {
+        const usuario =  this.props.history.location.state.usuario;
+        console.log('USUARIO DEFESA CIVIL INDO PARA REGISTER', JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            role: "CIVILDEFENSE",
+        }));
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            role: "CIVILDEFENSE",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+                console.log(response);
+              console.log("erro ao cadastrar defesa civil register")
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ emailError: "Erro de conexão!" });
+        });
+
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user/civil-defense-officials", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            active: true,
+            civilDefenseRole: "ADMIN",
+            cpf: usuario.cpf,
+            email: usuario.email,
+            firstName: usuario.nome,
+            institutionalLink: this.state.vinculo,
+            lastName: usuario.sobrenome,
+            mobileId: "2010304050",
+            office: this.state.cargo,
+            phoneNumber: usuario.telefone,
+            photo: "foto",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              console.log("erro ao cadastrar defesa civil user")
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ emailError: "Erro de conexão!" });
+          });
+      }; 
 
     render() {
         return (
