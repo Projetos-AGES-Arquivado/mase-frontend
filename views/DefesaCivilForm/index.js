@@ -39,7 +39,7 @@ class DefesaCivilForm extends Component {
             password: usuario.password,
             role: "CIVILDEFENSE",
         }));
-        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register/civildefense", {
           method: "POST",
           headers: {
             Accept: "application/json",
