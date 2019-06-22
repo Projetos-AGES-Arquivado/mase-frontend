@@ -143,6 +143,14 @@ class LoginForm extends Component {
         if (!this.state.voluntario && !this.state.naoVoluntario && !this.state.defesaCivil ){
             this.setState({ msgPerfilError: 'É necessário selecionar um tipo de perfil!' });
         } else if(this.state.voluntario || this.state.naoVoluntario || this.state.defesaCivil) { 
+            const usuario = {
+                nome: this.state.nome,
+                sobrenome: this.state.sobrenome,
+                cpf: this.state.cpf,
+                email: this.state.email,
+                password: this.state.password,
+                telefone: this.state.telefone,
+            }
             if(this.state.naoVoluntario){
                 //cadastrar nao voluntario e direcionar para menu principal
                 await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
@@ -201,7 +209,7 @@ class LoginForm extends Component {
                 this.props.history.push({pathname: "/cadastro-voluntario", state: { usuario: usuario }});
             }else if(this.state.defesaCivil){
                 //direcionar para pagina de cadastro de defesa civil
-                //this.props.history.push("/defesa-civil", state:{ usuario })
+                this.props.history.push({pathname: "/cadastro-defesaCivil", state: { usuario: usuario }})
             }
         }
     }
