@@ -17,7 +17,7 @@ class VoluntarioForm extends Component {
             vinculo: ''
         }
     }
-
+    
     checkTermoUm = () => {
         if(this.state.termoUm === false){
             this.setState({ termoUm: true })  
@@ -50,13 +50,68 @@ class VoluntarioForm extends Component {
         this.props.history.push('/cadastro');
     }
 
-    handleSubmit = () => {
-        console.log(this.state.termoUm)
-        console.log(this.state.termoDois)
-        console.log(this.state.profissao)
-        console.log(this.state.numeroConselho)
-        console.log(this.state.vinculo)
-    } 
+    handleSubmit = async () => {
+        const usuario =  this.props.history.location.state.usuario;
+        console.log('USUARIO INDO PARA REGISTER', JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            role: "VOLUNTEER",
+        }));
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            role: "VOLUNTEER",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              console.log("erro ao cadastrar usuario")
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ emailError: "Erro de conexão!" });
+        });
+
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user/volunteers", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            councilNumber: this.state.numeroConselho,
+            cpf: usuario.cpf,
+            email: usuario.email,
+            firstName: usuario.nome,
+            institutionalLink: this.state.vinculo,
+            lastName: usuario.sobrenome,
+            mobileId: "2010304050",
+            occupation: this.state.profissao,
+            phoneNumber: usuario.telefone,
+            photo: "foto",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              console.log("erro ao cadastrar usuario")
+            }
+            return response.json();
+          })
+          .then(data => {
+            console.log(data);
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ emailError: "Erro de conexão!" });
+          });
+      };
 
     render() {
         return (
@@ -117,7 +172,6 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         marginBottom: 10,
         padding: 10,
-        color: '#2f4f4f',
         textAlign: 'center',
     },
     termoAceitacao: {
