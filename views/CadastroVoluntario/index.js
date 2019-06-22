@@ -6,7 +6,7 @@ import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-
 import Header from '../Generic/Header'
 
 // create a component
-class VoluntarioForm extends Component {
+class CadastroVoluntario extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -211,4 +211,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default withRouter(VoluntarioForm);
+export default withRouter(CadastroVoluntario);

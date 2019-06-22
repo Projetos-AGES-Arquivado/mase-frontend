@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { NativeRouter, Route, Link } from "react-router-native";
-import Login from "../Login";
-import Signup from "../Signup";
-import FuncionarioForm from "../FuncionarioForm";
-import VoluntarioForm from "../VoluntarioForm";
-import DefesaCivilForm from "../DefesaCivilForm";
+import Login from "../views/Login";
+import CadastroUsuario from "../views/CadastroUsuario";
+import CadastroVoluntario from '../views/CadastroVoluntario';
+import Mapa from '../views/Mapa'
+
 import {
   View,
   Text,
@@ -20,10 +20,9 @@ function App() {
   return (
     <NativeRouter>
       <Route exact path="/" component={Login} />
-      <Route path="/cadastro" component={Signup} />
-      <Route path="/cadastroF" component={FuncionarioForm} />
-      <Route path="/cadastro-voluntario" component={VoluntarioForm} />
-      <Route path="/cadastro-defesaCivil" component={DefesaCivilForm} />
+      <Route path="/cadastro" component={CadastroUsuario} />
+      <Route path="/cadastro-voluntario" component={CadastroVoluntario} />
+      <Route path="/mapa" component={Mapa} />
     </NativeRouter>
   );
 }

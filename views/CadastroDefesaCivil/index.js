@@ -2,11 +2,11 @@
 import React, { Component } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
 import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
+import { Container, Content, Form, Item, CheckBox, Body, ListItem} from '../CadastroUsuario/node_modules/native-base';
 import Header from '../Generic/Header'
 
 // create a component
-class DefesaCivilForm extends Component {
+class CadastroDefesaCivil extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -121,4 +121,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default withRouter(DefesaCivilForm);
+export default withRouter(CadastroDefesaCivil);

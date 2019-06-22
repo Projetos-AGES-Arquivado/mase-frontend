@@ -1,12 +1,12 @@
 //import liraries
 import React, { Component } from 'react';
 import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
-import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
+import { Container, Header, Content, ListItem, CheckBox, Body } from '../CadastroUsuario/node_modules/native-base';
 import Wapper from '../Generic/Wrapper';
 import { NativeRouter, Route, Link, withRouter } from "react-router-native";
 
 // create a component
-class LoginForm extends Component {
+class CadastroFuncionarioDefesaCivil extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -331,4 +331,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default withRouter(LoginForm);
+export default withRouter(CadastroFuncionarioDefesaCivil);

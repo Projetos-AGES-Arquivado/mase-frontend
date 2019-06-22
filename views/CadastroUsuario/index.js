@@ -13,7 +13,7 @@ const onButtonPress = () => {
 
 
 // create a component
-class LoginForm extends Component {
+class CadastroUsuario extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -410,4 +410,4 @@ const styles = StyleSheet.create({
 });
 
 //make this component available to the app
-export default withRouter(LoginForm);
+export default withRouter(CadastroUsuario);
