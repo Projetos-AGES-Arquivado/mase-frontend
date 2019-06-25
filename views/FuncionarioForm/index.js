@@ -92,7 +92,7 @@ class LoginForm extends Component {
     validaCPF = (cpf) => {
         var numeros, digitos, soma, i, resultado, digitos_iguais;
         digitos_iguais = 1;
-        if (cpf.length < 11)
+        if (cpf.length < 11 || cpf.length > 11)
               return false;
         for (i = 0; i < cpf.length - 1; i++)
               if (cpf.charAt(i) != cpf.charAt(i + 1))
@@ -254,6 +254,7 @@ class LoginForm extends Component {
 const styles = StyleSheet.create({
     container: {
         padding: 20,
+        backgroundColor: '#fff',
     },
     input: {
         height: 50,

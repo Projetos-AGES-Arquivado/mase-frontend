@@ -54,7 +54,11 @@ class LoginForm extends Component {
     }
 
     handleCPFChange = (cpf) => {
-        this.setState({ cpf });
+        if(this.validaCPF(cpf)){
+            this.setState({ usuario: { cpf }, msgCpf: ''})
+        } else{
+            this.setState({ usuario: { cpf }, msgCpf: 'Digite um cpf válido!'})
+        }
     }
 
     handleTelefoneChange = (telefone) => {
@@ -119,6 +123,40 @@ class LoginForm extends Component {
        } else {
            return false;
         }
+    }
+
+    validaCPF = (cpf) => {
+        var numeros, digitos, soma, i, resultado, digitos_iguais;
+        digitos_iguais = 1;
+        if (cpf.length < 11 || cpf.length > 11)
+              return false;
+        for (i = 0; i < cpf.length - 1; i++)
+              if (cpf.charAt(i) != cpf.charAt(i + 1))
+                    {
+                    digitos_iguais = 0;
+                    break;
+                    }
+        if (!digitos_iguais)
+              {
+              numeros = cpf.substring(0,9);
+              digitos = cpf.substring(9);
+              soma = 0;
+              for (i = 10; i > 1; i--)
+                    soma += numeros.charAt(10 - i) * i;
+              resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+              if (resultado != digitos.charAt(0))
+                    return false;
+              numeros = cpf.substring(0,10);
+              soma = 0;
+              for (i = 11; i > 1; i--)
+                    soma += numeros.charAt(11 - i) * i;
+              resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+              if (resultado != digitos.charAt(1))
+                    return false;
+              return true;
+              }
+        else
+            return false;
     }
 
     checkFormulario = () => {
@@ -214,43 +252,6 @@ class LoginForm extends Component {
         }
     }
 
-    handleSubmit = async () => {
-        //console.log('10.0.2.2')
-        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/login", {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            email: this.state.email,
-            password: this.state.password
-          })
-        })
-          .then(response => {
-            if (!response.ok) {
-              console.log("Erro ao cadastrar voluntario");
-            }
-            return response.json();
-          })
-          .then(data => {
-            console.log(data);
-            if (data && data.token) {
-              AsyncStorage.multiSet([
-                ["token", data.token],
-                ["refreshToken", data.refreshToken],
-                ["role", data.role],
-                ["expires", String(data.expires)]
-              ]);
-              this.props.history.push("/cadastro");
-            }
-          })
-          .catch(error => {
-            console.log(error);
-            this.setState({ emailError: "Erro de conexão!" });
-          });
-      };
-
     render() {
         return (
             <ScrollView style={styles.container}>
@@ -297,6 +298,9 @@ class LoginForm extends Component {
                     returnKeyT Numype="next"
                     placeholder='CPF'
                     placeholderTextColor='#2f4f4f' />
+                <View style={styles.msgErrorView}>
+                    <Text style={styles.msgError}>{this.state.msgCpf}</Text>
+                </View>
                 <TextInput style={styles.input}
                     autoCapitalize="none"
                     onSubmitEditing={() => this.passwordInput.focus()}

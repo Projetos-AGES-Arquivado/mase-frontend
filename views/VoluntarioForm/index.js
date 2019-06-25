@@ -51,12 +51,18 @@ class VoluntarioForm extends Component {
     }
 
     handleSubmit = async () => {
+        if(!this.state.termoUm || !this.state.termoDois){
+            Alert.alert(
+                'Termos de aceitação',
+                'É obrigatório aceitar os termos de aceitação!',
+                [
+                    {text: 'OK'},
+                ],
+                {cancelable: false},
+                );
+                return;
+        }      
         const usuario =  this.props.history.location.state.usuario;
-        console.log('USUARIO INDO PARA REGISTER', JSON.stringify({
-            email: usuario.email,
-            password: usuario.password,
-            role: "VOLUNTEER",
-        }));
         await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
           method: "POST",
           headers: {
@@ -164,7 +170,8 @@ class VoluntarioForm extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
+        backgroundColor: '#fff',
     },
     input: {
         height: 50,

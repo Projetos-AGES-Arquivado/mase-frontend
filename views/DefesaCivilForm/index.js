@@ -33,12 +33,18 @@ class DefesaCivilForm extends Component {
     }
 
     handleSubmit = async () => {
+        if(!this.state.termoAceito){
+            Alert.alert(
+                'Termo de aceitação',
+                'É obrigatório aceitar o termo de aceitação!',
+                [
+                    {text: 'OK'},
+                ],
+                {cancelable: false},
+                );
+                return;
+        }      
         const usuario =  this.props.history.location.state.usuario;
-        console.log('USUARIO DEFESA CIVIL INDO PARA REGISTER', JSON.stringify({
-            email: usuario.email,
-            password: usuario.password,
-            role: "CIVILDEFENSE",
-        }));
         await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register/civildefense", {
           method: "POST",
           headers: {
@@ -130,7 +136,8 @@ class DefesaCivilForm extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
+        backgroundColor: '#fff',
     },
     input: {
         height: 50,
