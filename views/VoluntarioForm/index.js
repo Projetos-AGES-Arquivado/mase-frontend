@@ -1,8 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
-import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { withRouter } from "react-router-native";
+import { CheckBox, ListItem} from 'native-base';
 import Header from '../Generic/Header'
 
 // create a component
@@ -98,7 +98,7 @@ class VoluntarioForm extends Component {
             firstName: usuario.nome,
             institutionalLink: this.state.vinculo,
             lastName: usuario.sobrenome,
-            mobileId: "2010304050",
+            mobileId: usuario.mobileId,
             occupation: this.state.profissao,
             phoneNumber: usuario.telefone,
             photo: "foto",
@@ -122,7 +122,7 @@ class VoluntarioForm extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Header texto="Cadastro Voltuntário" />
+                <Header texto="Cadastro Voluntário" />
                 <TextInput style={styles.input}
                     onChangeText={this.handleProfissao}
                     placeholder='Profissão'

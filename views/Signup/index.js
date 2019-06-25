@@ -1,16 +1,9 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
-import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
-import Wapper from '../Generic/Wrapper';
-import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import {ImagePicker, Permissions, Constants} from 'expo';
-
-
-const onButtonPress = () => {
-    Alert.alert(`Success!`);
-};
-
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {  Content, ListItem, CheckBox, Body } from 'native-base';
+import {  withRouter } from "react-router-native";
+import Header from '../Generic/Header'
 
 // create a component
 class LoginForm extends Component {
@@ -34,6 +27,7 @@ class LoginForm extends Component {
             msgTelefeone: '',
             msgSenha: '',
             msgEmail: '',
+            mobileId: Expo.Constants.deviceId,
         }
     }
 
@@ -188,9 +182,9 @@ class LoginForm extends Component {
                 email: this.state.email,
                 password: this.state.password,
                 telefone: this.state.telefone,
+                mobileId: this.state.mobileId,
             }
             if(this.state.naoVoluntario){
-                //cadastrar nao voluntario e direcionar para menu principal
                 await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
                   method: "POST",
                   headers: {
@@ -242,11 +236,8 @@ class LoginForm extends Component {
                     });
                 this.props.history.push("/telaPrincipal")
             }else if(this.state.voluntario){
-                //direcionar para pagina de cadastro de voluntario
-                ////this.props.history.push("/cadastro-voluntario", state:{ usuario })
                 this.props.history.push({pathname: "/cadastro-voluntario", state: { usuario: usuario }});
             }else if(this.state.defesaCivil){
-                //direcionar para pagina de cadastro de defesa civil
                 this.props.history.push({pathname: "/cadastro-defesaCivil", state: { usuario: usuario }})
             }
         }
@@ -255,6 +246,7 @@ class LoginForm extends Component {
     render() {
         return (
             <ScrollView style={styles.container}>
+                <Header texto="Cadastro" />
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}
