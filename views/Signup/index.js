@@ -159,6 +159,7 @@ class LoginForm extends Component {
              this.state.msgSobrenome.length > 0 ||
              this.state.msgEmail.length > 0 ||
              this.state.msgTelefeone.length > 0 ||
+             this.state.msgCpf > 0 ||
              this.state.msgSenha > 0) {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
             return false;
