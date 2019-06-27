@@ -79,15 +79,15 @@ class LoginForm extends Component {
     }
 
     checkNaoVoluntario = () => {
-        this.setState({ naoVoluntario: true, voluntario: false, defesaCivil: false})
+        this.setState({ naoVoluntario: true, voluntario: false, defesaCivil: false, msgPerfilError: ''})
     }
 
     checkVoluntario = () => {
-        this.setState({ naoVoluntario: false, voluntario: true, defesaCivil: false})
+        this.setState({ naoVoluntario: false, voluntario: true, defesaCivil: false, msgPerfilError: ''})
     }
 
     checkDefesaCivil = () => {
-        this.setState({ naoVoluntario: false, voluntario: false, defesaCivil: true})
+        this.setState({ naoVoluntario: false, voluntario: false, defesaCivil: true, msgPerfilError: ''})
     }
 
     handleVoltar = () => {
