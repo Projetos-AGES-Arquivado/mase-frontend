@@ -49,9 +49,9 @@ class LoginForm extends Component {
 
     handleCPFChange = (cpf) => {
         if(this.validaCPF(cpf)){
-            this.setState({ usuario: { cpf }, msgCpf: ''})
+            this.setState({ cpf , msgCpf: ''})
         } else{
-            this.setState({ usuario: { cpf }, msgCpf: 'Digite um cpf válido!'})
+            this.setState({ cpf , msgCpf: 'Digite um cpf válido!'})
         }
     }
 
