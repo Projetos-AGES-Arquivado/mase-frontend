@@ -5,6 +5,7 @@ import Signup from "../Signup";
 import FuncionarioForm from "../FuncionarioForm";
 import VoluntarioForm from "../VoluntarioForm";
 import DefesaCivilForm from "../DefesaCivilForm";
+import AcionarPlano from "../AcionarPlano";
 import {
   View,
   Text,
