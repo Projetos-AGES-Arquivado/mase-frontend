@@ -155,12 +155,13 @@ class LoginForm extends Component {
 
     checkFormulario = () => {
         if (this.state.msgPerfilError.length > 0 ||
-             this.state.msgNome.length > 0 ||
-             this.state.msgSobrenome.length > 0 ||
-             this.state.msgEmail.length > 0 ||
-             this.state.msgTelefeone.length > 0 ||
-             this.state.msgCpf > 0 ||
-             this.state.msgSenha > 0) {
+             this.state.nome.length === 0 ||
+             this.state.sobrenome.length === 0 ||
+             this.state.email.length === 0 ||
+             this.state.telefone.length === 0 ||
+             this.state.cpf.length === 0 ||
+             this.state.senha.length ===  0 || (!this.state.voluntario && !this.state.naoVoluntario && !this.state.defesaCivil)
+             ) {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
             return false;
         }
