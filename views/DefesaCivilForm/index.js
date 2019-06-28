@@ -1,8 +1,8 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar, Input } from 'react-native';
-import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import { Container, Content, Form, Item, CheckBox, Body, ListItem} from 'native-base';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { withRouter } from "react-router-native";
+import { CheckBox, ListItem} from 'native-base';
 import Header from '../Generic/Header'
 
 // create a component
@@ -31,10 +31,74 @@ class DefesaCivilForm extends Component {
     handleCancel = () => {
         this.props.history.push('/cadastro');
     }
-    handleSubmit = () => {
-        console.log(this.state.cargo)
-        console.log(this.state.vinculo)
-    } 
+
+    handleSubmit = async () => {
+        if(!this.state.termoAceito){
+            Alert.alert(
+                'Termo de aceitação',
+                'É obrigatório aceitar o termo de aceitação!',
+                [
+                    {text: 'OK'},
+                ],
+                {cancelable: false},
+                );
+                return;
+        }      
+        const usuario =  this.props.history.location.state.usuario;
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register/civildefense", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            email: usuario.email,
+            password: usuario.password,
+            role: "CIVILDEFENSE",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+                console.log(response);
+              console.log("erro ao cadastrar defesa civil register")
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            this.setState({ emailError: "Erro de conexão!" });
+        });
+
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user/civil-defense-officials", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            active: true,
+            civilDefenseRole: "ADMIN",
+            cpf: usuario.cpf,
+            email: usuario.email,
+            firstName: usuario.nome,
+            institutionalLink: this.state.vinculo,
+            lastName: usuario.sobrenome,
+            mobileId: usuario.mobileId,
+            office: this.state.cargo,
+            phoneNumber: usuario.telefone,
+            photo: "foto",
+          })
+        })
+          .then(response => {
+            if (!response.ok) {
+              console.log("erro ao cadastrar defesa civil user")
+            }else{
+                this.props.history.push({pathname: "/telaPrincipal", state: { usuario: usuario }});
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }; 
 
     render() {
         return (
@@ -73,7 +137,8 @@ class DefesaCivilForm extends Component {
 // define your styles
 const styles = StyleSheet.create({
     container: {
-        padding: 20
+        padding: 20,
+        backgroundColor: '#fff',
     },
     input: {
         height: 50,

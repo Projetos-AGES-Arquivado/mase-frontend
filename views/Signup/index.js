@@ -1,31 +1,22 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Image, ScrollView, Text, TextInput, TouchableOpacity, Alert, Button, StyleSheet, StatusBar } from 'react-native';
-import { Container, Header, Content, ListItem, CheckBox, Body } from 'native-base';
-import Wapper from '../Generic/Wrapper';
-import { NativeRouter, Route, Link, withRouter } from "react-router-native";
-import {ImagePicker, Permissions, Constants} from 'expo';
-
-
-const onButtonPress = () => {
-    Alert.alert(`Success!`);
-};
-
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import {  Content, ListItem, CheckBox, Body } from 'native-base';
+import {  withRouter } from "react-router-native";
+import Header from '../Generic/Header'
 
 // create a component
 class LoginForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            usuario: {
-                nome: '',
-                sobrenome: '',
-                password: '',
-                cpf: '',
-                email: '',
-                telefone: '',
-                imagem: '',
-            },
+            nome: '',
+            sobrenome: '',
+            password: '',
+            cpf: '',
+            email: '',
+            telefone: '',
+            imagem: 'foto',
             naoVoluntario: false,
             voluntario: false,
             defesaCivil: false,
@@ -34,43 +25,41 @@ class LoginForm extends Component {
             msgPerfilError: '', 
             msgGeral: '',
             msgTelefeone: '',
-            msgCpf: '',
             msgSenha: '',
             msgEmail: '',
-            msgImagem: '',
-            
+            mobileId: Expo.Constants.deviceId,
         }
     }
 
     handleEmailChange = (email) => {
         if(this.validaEmail(email)){
-            this.setState({ usuario: { email }, msgEmail: ''})
+            this.setState({ email, msgEmail: ''})
         } else{
-            this.setState({ usuario: { email }, msgEmail: 'Digite um email válido!'})
+            this.setState({ email, msgEmail: 'Digite um email válido!'})
         }
     }
     
     handlePasswordChange = (password) => {
         if(this.validaSenha(password)){
-            this.setState({ usuario: { password }, msgSenha: ''})
+            this.setState({ password, msgSenha: ''})
         } else{
-            this.setState({ usuario: { password }, msgSenha: 'Sua senha deve possuir no mínimo 8 caractéres'})
+            this.setState({ password, msgSenha: 'Sua senha deve possuir no mínimo 8 caractéres'})
         }
     }
 
     handleCPFChange = (cpf) => {
         if(this.validaCPF(cpf)){
-            this.setState({ usuario: { cpf }, msgCpf: ''})
+            this.setState({ cpf , msgCpf: ''})
         } else{
-            this.setState({ usuario: { cpf }, msgCpf: 'Digite um cpf válido!'})
+            this.setState({ cpf , msgCpf: 'Digite um cpf válido!'})
         }
     }
 
     handleTelefoneChange = (telefone) => {
         if(this.validaTelefone(telefone)){
-            this.setState({ usuario: { telefone }, msgTelefone: '' })
+            this.setState({ telefone, msgTelefone: '' })
         } else{
-            this.setState({ usuario: { telefone }, msgTelefone: 'Digite um telefone válido!' })
+            this.setState({ telefone, msgTelefone: 'Digite um telefone válido!' })
         }
     }
 
@@ -78,37 +67,62 @@ class LoginForm extends Component {
         if(nome.length === 0){
             this.setState({ msgNome: "Campo obrigatório!" })
         }else{
-            this.setState({ usuario: { nome }, msgNome: ''});
+            this.setState({ nome, msgNome: ''});
         }
     }
     handleSobrenomeChange = (sobrenome) => {
         if(sobrenome.length === 0){
-            this.setState({msgSobrenome: "Campo obrigatório!" })
+            this.setState({ msgSobrenome: "Campo obrigatório!" })
         }else{
-            this.setState({ usuario: { sobrenome }, msgSobrenome: ''});
+            this.setState({ sobrenome, msgSobrenome: ''});
         }
     }
 
     checkNaoVoluntario = () => {
-        this.setState({ naoVoluntario: true, voluntario: false, defesaCivil: false})
+        this.setState({ naoVoluntario: true, voluntario: false, defesaCivil: false, msgPerfilError: ''})
     }
 
     checkVoluntario = () => {
-        this.setState({ naoVoluntario: false, voluntario: true, defesaCivil: false})
+        this.setState({ naoVoluntario: false, voluntario: true, defesaCivil: false, msgPerfilError: ''})
     }
 
     checkDefesaCivil = () => {
-        this.setState({ naoVoluntario: false, voluntario: false, defesaCivil: true})
+        this.setState({ naoVoluntario: false, voluntario: false, defesaCivil: true, msgPerfilError: ''})
     }
 
     handleVoltar = () => {
         this.props.history.push('/');
     }
 
+    validaEmail = (email) => {
+        var str = email;
+        var filtro = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/;
+        if(filtro.test(str)) {
+            return true;
+       } else {
+           return false;
+        }
+    }
+
+    validaTelefone = (telefone)  => {
+        var regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$');
+        return regex.test(telefone);
+    }
+
+    validaSenha = (senha) =>{
+        var str = senha;
+        var filtro = /[a-zA-Z0-9]{8,12}$/;
+        if(filtro.test(str)) {
+            return true;
+       } else {
+           return false;
+        }
+    }
+
     validaCPF = (cpf) => {
         var numeros, digitos, soma, i, resultado, digitos_iguais;
         digitos_iguais = 1;
-        if (cpf.length < 11)
+        if (cpf.length < 11 || cpf.length > 11)
               return false;
         for (i = 0; i < cpf.length - 1; i++)
               if (cpf.charAt(i) != cpf.charAt(i + 1))
@@ -137,85 +151,103 @@ class LoginForm extends Component {
               }
         else
             return false;
-    } 
-
-    validaEmail = (email) => {
-        var str = email;
-        var filtro = /^[a-zA-Z0-9][a-zA-Z0-9\._-]+@([a-zA-Z0-9\._-]+\.)[a-zA-Z-0-9]{2,3}$/;
-        if(filtro.test(str)) {
-            return true;
-       } else {
-           return false;
-        }
-    }
-
-    validaTelefone = (telefone)  => {
-        var regex = new RegExp('^((1[1-9])|([2-9][0-9]))((3[0-9]{3}[0-9]{4})|(9[0-9]{3}[0-9]{5}))$');
-        return regex.test(telefone);
-    }
-
-    validaSenha = (senha) =>{
-        var str = senha;
-        var filtro = /[a-zA-Z0-9]{8,12}$/;
-        if(filtro.test(str)) {
-            return true;
-       } else {
-           return false;
-        }
     }
 
     checkFormulario = () => {
         if (this.state.msgPerfilError.length > 0 ||
              this.state.msgNome.length > 0 ||
              this.state.msgSobrenome.length > 0 ||
-             this.state.msgCpf.length > 0 ||
              this.state.msgEmail.length > 0 ||
              this.state.msgTelefeone.length > 0 ||
-             this.state.msgSenha > 0 ||
-             this.state.msgImagem > 0) {
+             this.state.msgCpf > 0 ||
+             this.state.msgSenha > 0) {
             this.setState({ msgGeral: "Preencha todos os campos do formulário!" });
             return false;
         }
+        this.setState({ msgGeral: "" });
         return true;
     }
 
 
-    handleContinue = () => {
+    handleContinue =  async() => {
         if(this.checkFormulario() === false){
             return;
         };
-        if (!this.state.voluntario || !this.state.naoVoluntario || !this.state.defesaCivil ){
+        if (!this.state.voluntario && !this.state.naoVoluntario && !this.state.defesaCivil ){
             this.setState({ msgPerfilError: 'É necessário selecionar um tipo de perfil!' });
         } else if(this.state.voluntario || this.state.naoVoluntario || this.state.defesaCivil) { 
-            this.setState({ msgPerfilError: '' })
+            const usuario = {
+                nome: this.state.nome,
+                sobrenome: this.state.sobrenome,
+                cpf: this.state.cpf,
+                email: this.state.email,
+                password: this.state.password,
+                telefone: this.state.telefone,
+                mobileId: this.state.mobileId,
+            }
+            if(this.state.naoVoluntario){
+                await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json"
+                  },
+                  body: JSON.stringify({
+                    email: this.state.email,
+                    password: this.state.password,
+                    role: "USER",
+                  })
+                })
+                  .then(response => {
+                    if (!response.ok) {
+                      console.log("erro ao cadastrar usuario")
+                    }
+                  })
+                  .catch(error => {
+                    console.log(error);
+                });
+
+                await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user", {
+                    method: "POST",
+                    headers: {
+                      Accept: "application/json",
+                      "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                      cpf: this.state.cpf,
+                      email: this.state.email,
+                      firstName: this.state.nome,
+                      lastName: this.state.sobrenome,
+                      mobileId: "2010304050",
+                      phoneNumber: this.state.telefone,
+                      photo: "foto",
+                    })
+                  })
+                    .then(response => {
+                      if (!response.ok) {
+                        console.log("erro ao cadastrar usuario")
+                      }else{
+                        this.props.history.push({pathname: "/telePrincipal", state: { usuario: usuario }});
+                      }
+                    })
+                    .then(data => {
+                      console.log(data);
+                    })
+                    .catch(error => {
+                      console.log(error);
+                    });
+            }else if(this.state.voluntario){
+                this.props.history.push({pathname: "/cadastro-voluntario", state: { usuario: usuario }});
+            }else if(this.state.defesaCivil){
+                this.props.history.push({pathname: "/cadastro-defesaCivil", state: { usuario: usuario }})
+            }
         }
     }
 
-    handleChoosePhoto = async () => {
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-      });
-
-      if (!result.cancelled) {
-        await this.setState({ imagem: result.uri, msgImagem: '' });
-      } else if(this.state.usuario.imagem.length === '' &&  msgImagem.length === ''){
-        this.setState({ msgImagem: "É obrigatório inserir uma imagem para seu perfil!" });
-      }
-    }
-
     render() {
-        console.log(this.state)
         return (
             <ScrollView style={styles.container}>
-                <Image style={styles.logo} source={{ uri: this.state.imagem }} />
-                <View style={styles.msgErrorView}>
-                    <Text style={styles.msgError}>{this.state.msgImagem}</Text>
-                </View>
-                  <TouchableOpacity style={styles.buttonContainer} onPress={this.handleChoosePhoto}>
-                        <Text style={styles.buttonText}>Escolher Foto</Text>
-                    </TouchableOpacity>
+                <Header texto="Cadastro" />
                 <TextInput style={styles.input}
                     autoCapitalize="words"
                     onSubmitEditing={() => this.passwordInput.focus()}

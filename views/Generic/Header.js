@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, DrawerLayoutAndroid } from 'react-native';
+import { View, Text, Image, StyleSheet,KeyboardAvoidingView } from 'react-native';
 
 // create a component
 class Header extends Component {
@@ -8,21 +8,9 @@ class Header extends Component {
         super(props)
     }
 
-    onHamburgerClick() {
-        this.props.toggleDrawer();
-    }
-
     render() {
         return (
-            <View style={styles.viewStyle}>
-                <View>
-                    <TouchableOpacity onPress={ this.onHamburgerClick}>
-                        <Image
-                            style={styles.menuStyle}>
-
-                        </Image>
-                    </TouchableOpacity>
-                </View>
+            <View style={styles.container}>
                 <Text style={styles.title}>{this.props.texto}</Text>
             </View>
         );

@@ -62,12 +62,12 @@ class LoginForm extends Component {
                         ["role", data.role],
                         ["expires", String(data.expires)]
                     ]);
-                    this.props.history.push("/cadastro");
+                this.props.history.push("/telaPrincipal");
                 }
             })
             .catch(error => {
                 console.log(error);
-                this.setState({ emailError: "Erro de conexão!" });
+                this.setState({ emailError: "Email ou senha inválidos!" });
             });
     };
 
