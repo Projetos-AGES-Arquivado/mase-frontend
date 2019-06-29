@@ -7,61 +7,29 @@ class Perfil extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        
-    
 
-						<Image style={styles.img} source={require('../assets/perfilAvatar.png')} />
-
-        
-        
         <MenuButton navigation={this.props.navigation} />
-        <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>Nome</Text>
+        <Image style={styles.img} source={require('../assets/perfilAvatar.png')} />
+
+        <Text style = {styles.textStyle}>Nome</Text>
             <Text>John Doe </Text>
 
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>CPF</Text>
+        <Text style = {styles.textStyle}>CPF</Text>
           <Text>032.833.000.51</Text>
           
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>Telefone</Text>
+        <Text style = {styles.textStyle}>Telefone</Text>
           <Text>(51) 3344-4697</Text>
 
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>Telefone</Text>
+        <Text style = {styles.textStyle}>Telefone</Text>
           <Text>(51) 3344-4697</Text>
 
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>E-mail</Text>
+        <Text style = {styles.textStyle}>E-mail</Text>
           <Text>JoãoDoe@gmail.com</Text>
 
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>Tipo de Perfil</Text>
+        <Text style = {styles.textStyle}>Tipo de Perfil</Text>
           <Text>Não voluntário</Text>
 
-          <Text style = {{
-          margin: 14,
-          fontSize: 25,
-          fontWeight: '500',
-          }}>Profissão</Text>
+        <Text style = {styles.textStyle}>Profissão</Text>
           <Text>Bombeiro</Text>
 
       </View>
@@ -75,12 +43,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20
+    marginTop: 30
   },
   img: {
     height: 85,
     width: 85,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop:15
+  },
+  textStyle: {
+    margin: 14,
+    fontSize: 25,
+    fontWeight: '500',
   }
 });
 
