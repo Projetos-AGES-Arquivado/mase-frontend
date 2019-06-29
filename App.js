@@ -17,6 +17,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'stretch',
-    backgroundColor: '#F9F5E6'
+    backgroundColor: '#FFF'
   },
 });
