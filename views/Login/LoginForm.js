@@ -23,7 +23,7 @@ class LoginForm extends Component {
       emailError: ""
     };
   }
-
+  
   handleEmailChange = email => {
     this.setState({ email: email });
   };
@@ -51,7 +51,7 @@ class LoginForm extends Component {
               "Email ou senha estão inválidos, favor digitar corretamente!"
           });
         }
-        return response.json();
+        this.props.history.push("/menu-drawer");
       })
       .then(data => {
         console.log(data);
@@ -62,7 +62,7 @@ class LoginForm extends Component {
             ["role", data.role],
             ["expires", String(data.expires)]
           ]);
-          this.props.history.push("/cadastro");
+          this.props.history.push("/menu-drawer");
         }
       })
       .catch(error => {

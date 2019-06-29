@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Login from './views/Login/index'
 import Route from "./views/routes/index"
 
 export default class App extends React.Component {
@@ -8,7 +7,6 @@ export default class App extends React.Component {
     return (
       <View style={styles.container}>
         { Route() }
-        {/* <Login/> */}
       </View>
     );
   }

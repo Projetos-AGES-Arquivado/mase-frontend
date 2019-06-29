@@ -14,6 +14,7 @@ import {
   StyleSheet,
   StatusBar
 } from "react-native";
+import DrawerNavigator from '../../navigation/DrawerNavigator';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/cadastro" component={Signup} />
       <Route path="/cadastro-voluntario" component={VoluntarioForm} />
       <Route path="/cadastro-defesaCivil" component={DefesaCivilForm} />
+      <Route path="/menu-drawer" component={DrawerNavigator} />
     </NativeRouter>
   );
 }
