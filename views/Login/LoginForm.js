@@ -33,7 +33,7 @@ class LoginForm extends Component {
 
   handleSubmit = async () => {
     //console.log('10.0.2.2')
-    await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/login", {
+    await fetch("http:/www.hml.ages.pucrs.br:8380/v1/login", {
       method: "POST",
       headers: {
         Accept: "application/json",

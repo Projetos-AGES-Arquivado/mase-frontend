@@ -63,7 +63,7 @@ class VoluntarioForm extends Component {
                 return;
         }      
         const usuario =  this.props.history.location.state.usuario;
-        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
+        await fetch("http://www.hml.ages.pucrs.br:8380/v1/register", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -85,7 +85,7 @@ class VoluntarioForm extends Component {
             this.setState({ emailError: "Erro de conexão!" });
         });
 
-        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user/volunteers", {
+        await fetch("http://www.hml.ages.pucrs.br:8381/api/user/volunteers", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -102,13 +102,26 @@ class VoluntarioForm extends Component {
             occupation: this.state.profissao,
             phoneNumber: usuario.telefone,
             photo: "foto",
+            lastLocation: {
+                latitude: 0,
+                longitude: 0
+              },
           })
         })
           .then(response => {
             if (!response.ok) {
               console.log("erro ao cadastrar usuario")
-            }
-            return response.json();
+            }else{
+                Alert.alert(
+                    'Cadastro de voluntário:',
+                    'Seu cadastro foi realizado com sucesso!',
+                    [
+                        {text: 'OK'},
+                    ],
+                    {cancelable: false},
+                    );
+                this.props.history.push({pathname: "/menu-drawer", state: { usuario: this.state.usuario }})
+              }
           })
           .then(data => {
             console.log(data);
