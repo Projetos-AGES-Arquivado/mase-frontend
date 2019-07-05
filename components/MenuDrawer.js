@@ -13,6 +13,21 @@ import {
 const WIDTH = Dimensions.get('window').width 
 const HEIGHT = Dimensions.get('window').height 
 
+getDataUsingGet= () => {
+    fetch('http://www.hml.ages.pucrs.br:8380/', {
+        method: 'GET'
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+        JSON.parse(responseJson);
+        console.log(responseJson);
+    })
+    .catch((error) => {
+        JSON.stringify(error);
+        console.error(error);
+    });
+  }
+
 export default class MenuDrawer extends React.Component {
 	navLink(nav, text) {
 		return(

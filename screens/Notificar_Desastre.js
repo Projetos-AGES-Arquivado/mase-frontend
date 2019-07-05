@@ -24,13 +24,13 @@ export default class Notificar_Desastre extends React.Component {
           placeholder='Tipo Desastre'
           autoCapitalize="none"
           placeholderTextColor='white'
+        /> 
+        <View style = {styles.button}>
+        <Button 
+          color="#000000"
+          title='Foto'
         />
-        <TextInput
-          style={styles.input}
-          placeholder='Foto'
-          autoCapitalize="none"
-          placeholderTextColor='white'
-        />
+        </View>
         <View style = {styles.button}>
         <Button 
           color="#000000"
