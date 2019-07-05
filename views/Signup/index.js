@@ -1,6 +1,6 @@
 //import liraries
 import React, { Component } from 'react';
-import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, ScrollView, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import {  Content, ListItem, CheckBox, Body } from 'native-base';
 import {  withRouter } from "react-router-native";
 import Header from '../Generic/Header'
@@ -186,7 +186,7 @@ class LoginForm extends Component {
                 mobileId: this.state.mobileId,
             }
             if(this.state.naoVoluntario){
-                await fetch("http://www.hml.ages.pucrs.br:8380/v1/register", {
+                await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register", {
                   method: "POST",
                   headers: {
                     Accept: "application/json",
@@ -207,7 +207,7 @@ class LoginForm extends Component {
                     console.log(error);
                 });
 
-                await fetch("http://www.hml.ages.pucrs.br:8381/api/user", {
+                await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user", {
                     method: "POST",
                     headers: {
                       Accept: "application/json",
@@ -226,17 +226,8 @@ class LoginForm extends Component {
                     .then(response => {
                       if (!response.ok) {
                         console.log("erro ao cadastrar usuario")
-                      }else {
-                        Alert.alert(
-                            'Cadastro de não voluntário:',
-                            'Seu cadastro foi realizado com sucesso!',
-                            [
-                                {text: 'OK'},
-                            ],
-                            {cancelable: false},
-                            );
-                        this.props.history.push({pathname: "/menu-drawer", state: { usuario: usuario }})
                       }
+                      return response.json();
                     })
                     .then(data => {
                       console.log(data);
@@ -244,6 +235,7 @@ class LoginForm extends Component {
                     .catch(error => {
                       console.log(error);
                     });
+                this.props.history.push("/telaPrincipal")
             }else if(this.state.voluntario){
                 this.props.history.push({pathname: "/cadastro-voluntario", state: { usuario: usuario }});
             }else if(this.state.defesaCivil){

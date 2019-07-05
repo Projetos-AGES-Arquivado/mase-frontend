@@ -45,7 +45,7 @@ class DefesaCivilForm extends Component {
                 return;
         }      
         const usuario =  this.props.history.location.state.usuario;
-        await fetch("http://www.hml.ages.pucrs.br:8380/v1/register/civildefense", {
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8083/v1/register/civildefense", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -59,6 +59,7 @@ class DefesaCivilForm extends Component {
         })
           .then(response => {
             if (!response.ok) {
+                console.log(response);
               console.log("erro ao cadastrar defesa civil register")
             }
           })
@@ -67,7 +68,7 @@ class DefesaCivilForm extends Component {
             this.setState({ emailError: "Erro de conexão!" });
         });
 
-        await fetch("http://www.hml.ages.pucrs.br:8381/api/user/civil-defense-officials", {
+        await fetch("http://ec2-18-224-188-194.us-east-2.compute.amazonaws.com:8080/api/user/civil-defense-officials", {
           method: "POST",
           headers: {
             Accept: "application/json",
@@ -90,17 +91,7 @@ class DefesaCivilForm extends Component {
           .then(response => {
             if (!response.ok) {
               console.log("erro ao cadastrar defesa civil user")
-            }else{
-                Alert.alert(
-                    'Cadastro de funcionário da defesa civil:',
-                    'Seu cadastro foi realizado com sucesso!',
-                    [
-                        {text: 'OK'},
-                    ],
-                    {cancelable: false},
-                    );
-                this.props.history.push({pathname: "/menu-drawer", state: { usuario: this.state.usuario }})
-              }
+            }
           })
           .catch(error => {
             console.log(error);
